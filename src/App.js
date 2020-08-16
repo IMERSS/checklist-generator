@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+// import { Provider } from 'react-redux';
+import { Stepper } from './components/Stepper';
+import { Step1 } from './pages/Step1';
+import "./css/global.css";
+
+const steps = [
+    'Intro',
+    'Upload file',
+    'Build checklist',
+    'Generate'
+];
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [stepIndex, setStepIndex] = useState(0);
+
+    return (
+        <div className="app">
+            <h1>Checklist generator</h1>
+
+            <Stepper steps={steps} activeStep={stepIndex} />
+
+            <Step1 onNext={() => setStepIndex(stepIndex+1)} />
+        </div>
+    );
 }
 
 export default App;
