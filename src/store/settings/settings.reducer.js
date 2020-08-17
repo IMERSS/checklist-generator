@@ -50,7 +50,8 @@ const settingsReducer = (state = initialState, action) => {
                     ...state.rows,
                     [newRowId]: {
                         colIndex: null,
-                        indent: true
+                        indent: true,
+                        format: '%VALUE%'
                     }
                 }
             };

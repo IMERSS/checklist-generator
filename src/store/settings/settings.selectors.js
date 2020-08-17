@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import {getBuilderHtml, getBuilderLines} from '../../helpers/builder';
 
 export const getData = (state) => state.settings.data;
 export const getPageIndex = (state) => state.settings.pageIndex;
@@ -31,12 +32,14 @@ export const getColumns = createSelector(
     }
 );
 
+export const getHtmlContent = (data, rowData) => {
+    const lines = getBuilderLines(data, rowData);
+    return getBuilderHtml(lines);
+};
+
+
 export const getContent = createSelector(
     getData,
     getRowData,
-    (data, rowData) => {
-        console.log(rowData);
-
-        return '';
-    }
+    getHtmlContent
 );

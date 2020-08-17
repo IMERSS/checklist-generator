@@ -3,9 +3,7 @@ import "./displayPanel.scss";
 
 const DisplayPanel = ({ content }) => {
     return (
-        <div className="displayPanel">
-            {content}
-        </div>
+        <div className="displayPanel" dangerouslySetInnerHTML={{ __html: content }} />
     )
 };
 
