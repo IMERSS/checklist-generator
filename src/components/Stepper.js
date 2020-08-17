@@ -5,10 +5,8 @@ import StepLabel from '@material-ui/core/StepLabel';
 
 
 export const Stepper = ({ steps, activeStep }) => {
-    console.log(activeStep);
-
     return (
-        <MUIStepper activeStep={0}>
+        <MUIStepper activeStep={activeStep}>
             {steps.map((label, index) => {
                 const stepProps = {};
                 const labelProps = {};

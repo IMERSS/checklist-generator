@@ -1,4 +1,15 @@
+body {
+    font-family: "verdana", sans-serif;
+    font-size: 13px;
+    line-height: 22px;
+    padding: 20px;
+}
+
 .app {
     width: 1000px;
     margin: auto;
+}
+
+footer {
+    margin-top: 20px;
 }

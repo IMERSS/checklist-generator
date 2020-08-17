@@ -1,9 +1,9 @@
 import Papa from 'papaparse';
 
 export const parseCsv = (file) => {
-    Papa.parse(file, {
-        complete: (data) => {
-            console.log(data);
-        }
+    return new Promise((resolve) => {
+        Papa.parse(file, {
+            complete: (data) => resolve(data)
+        });
     });
 };

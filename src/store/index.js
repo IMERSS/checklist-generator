@@ -1,13 +1,17 @@
 import Thunk from 'redux-thunk';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import settingsReducer from './settings/settings.reducer';
 
-import rootReducer from '';
+const rootReducer = combineReducers({
+    settings: settingsReducer
+});
 
-
-
-const globalReducer = createStore(
+const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+const store = createStore(
     rootReducer,
-    compose(
+    composeEnhancers(
         applyMiddleware(Thunk)
     )
 );
+
+export default store;
