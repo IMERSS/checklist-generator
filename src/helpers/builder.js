@@ -5,7 +5,7 @@ export const getBuilderLines = (data, rowConfig) => {
     for (let i=1; i<data.length; i++) {
         let currIndent = 0;
         rowConfig.forEach((config) => {
-            const { colIndex, indent } = config; // format
+            const { colIndex, format, indent } = config; // format
             const colValue = data[i][colIndex];
 
             currIndent = (indent) ? currIndent + 1 : currIndent;
@@ -16,7 +16,7 @@ export const getBuilderLines = (data, rowConfig) => {
             }
 
             lines.push({
-                value: colValue, // TODO: custom format
+                value: getFormattedCell(colValue, format),
                 indent: currIndent
             });
 
@@ -29,7 +29,7 @@ export const getBuilderLines = (data, rowConfig) => {
 
 // needs to be passed all cols
 export const getFormattedCell = (value, format) => {
-
+    return format.replace(/%VALUE%/, value);
 };
 
 export const getBuilderHtml = (lines, format = "html") => {

@@ -78,6 +78,19 @@ const settingsReducer = (state = initialState, action) => {
                 }
             };
         }
+        case actions.UPDATE_ROW_FORMAT: {
+            const { rowId, format } = action.payload;
+            return {
+                ...state,
+                rows: {
+                    ...state.rows,
+                    [rowId] : {
+                        ...state.rows[rowId],
+                        format
+                    }
+                }
+            }
+        }
         default:
             return state;
     }
