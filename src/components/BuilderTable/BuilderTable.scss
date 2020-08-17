@@ -1,0 +1,40 @@
+.builderTable {
+    padding-bottom: 20px;
+
+    .builderRow:first-child .indentCol {
+        visibility: hidden;
+    }
+}
+
+.builderRow {
+    display: flex;
+    border-bottom: 1px solid #cccccc;
+
+    div {
+        flex: 1;
+        padding: 3px;
+    }
+
+    .colDropdown {
+        flex: 0 0 auto;
+        margin-right: 20px;
+    }
+
+    .indentCol {
+        flex: 0 0 auto;
+        margin-right: 20px;
+    }
+
+    .formatCol {
+        flex: 1;
+        input {
+            width: 100%;
+        }
+        margin-right: 20px;
+    }
+
+    .deleteRow {
+        flex: 0 0 30px;
+    }
+}
+

@@ -1,6 +1,5 @@
 body {
     font-family: "verdana", sans-serif;
-    font-size: 13px;
     line-height: 22px;
     padding: 20px;
 }
@@ -12,4 +11,8 @@ body {
 
 footer {
     margin-top: 20px;
+}
+
+div, span, select, option, p, body, label {
+    font-size: 12px;
 }

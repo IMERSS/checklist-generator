@@ -1,12 +1,15 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import store from './store';
+import { PersistGate } from 'redux-persist/integration/react';
+import store, { persistor } from './store';
 import Page from './pages/Page.container';
 import "./css/global.css";
 
 const App = () => (
     <Provider store={store}>
-        <Page />
+        <PersistGate loading={null} persistor={persistor}>
+            <Page />
+        </PersistGate>
     </Provider>
 );
 
