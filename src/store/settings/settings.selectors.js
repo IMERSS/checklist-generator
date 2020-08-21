@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import {getBuilderHtml, getBuilderLines} from '../../helpers/builder';
+import { getBuilderHtml, getBuilderLines} from '../../helpers/builder';
 
 export const getData = (state) => state.settings.data;
 export const getPageIndex = (state) => state.settings.pageIndex;
@@ -10,10 +10,15 @@ export const getRowData = createSelector(
     getSortedRows,
     getRows,
     (sortedRows, rows) => {
-        return sortedRows.map((rowId) => ({
-            ...rows[rowId],
-            rowId
-        }))
+        return sortedRows.map((rowId) => {
+
+            console.log("-->", rows[rowId]);
+
+            return {
+                ...rows[rowId],
+                rowId
+            };
+        });
     }
 )
 

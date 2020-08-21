@@ -1,3 +1,5 @@
+import * as squirrelly from 'squirrelly';
+
 export const getBuilderLines = (data, rowConfig) => {
     const lastSeenColValues = [];
     const lines = [];
@@ -16,7 +18,7 @@ export const getBuilderLines = (data, rowConfig) => {
             }
 
             lines.push({
-                value: getFormattedCell(colValue, format),
+                value: getFormattedCell(format, { VALUE: colValue }),
                 indent: currIndent
             });
 
@@ -27,9 +29,15 @@ export const getBuilderLines = (data, rowConfig) => {
     return lines;
 };
 
-// needs to be passed all cols
-export const getFormattedCell = (value, format) => {
-    return format.replace(/%VALUE%/, value);
+// needs to be passed all col data
+export const getFormattedCell = (format, placeholders) => {
+    let value = '[...]';
+    try {
+        value = squirrelly.render(format, placeholders);
+    } catch (e) {
+        console.log(e);
+    }
+    return value;
 };
 
 export const getBuilderHtml = (lines, format = "html") => {
