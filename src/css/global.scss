@@ -5,8 +5,10 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
-.appBar div {
-  color: white;
+.appBar {
+  div, .MuiIconButton-label {
+    color: white;
+  }
 }
 
 .app {
@@ -18,8 +20,13 @@ footer {
   margin-top: 20px;
 }
 
-div, span, select, option, p, body, label {
+div, span, select, option, p, body, label, input {
   font-size: 13px;
+}
+
+select, option, input {
+  font-size: 12px;
+  font-family: "Open Sans", sans-serif;
 }
 
 .a {

@@ -4,8 +4,7 @@ import ColumnDropdown from '../ColumnDropdown/ColumnDropdown.container';
 import DisplayPanel from '../DisplayPanel/DisplayPanel.container';
 import "./BuilderTable.scss";
 
-export const BuilderTable = ({ builderTab, rows, onAddRow, onDeleteRow, onSelectColumn, onToggleRowIndentation,
-    onUpdateRowFormat, setBuilderTab }) => {
+export const BuilderTable = ({ rows, onAddRow, onDeleteRow, onSelectColumn, onToggleRowIndentation, onUpdateRowFormat }) => {
     let rowElements = <p>No rows.</p>;
 
     if (rows.length) {

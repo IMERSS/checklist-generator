@@ -45,3 +45,12 @@
     font-style: italic;
     color: #990000;
 }
+
+.builderSettings > div {
+    display: flex;
+    line-height: 30px;
+
+    .settingsCol1 {
+        flex: 0 0 130px;
+    }
+}

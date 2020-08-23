@@ -99,7 +99,24 @@ const settingsReducer = (state = initialState, action) => {
                 builderTab: action.payload.tab
             };
         }
-
+        case actions.UPDATE_FORMAT: {
+            return {
+                ...state,
+                format: action.payload.format
+            };
+        }
+        case actions.UPDATE_HTML_INDENT_WIDTH: {
+            return {
+                ...state,
+                htmlIndentWidth: action.payload.htmlIndentWidth
+            };
+        }
+        case actions.UPDATE_ROW_CLASS_PREFIX: {
+            return {
+                ...state,
+                rowClassPrefix: action.payload.prefix
+            };
+        }
         default:
             return state;
     }

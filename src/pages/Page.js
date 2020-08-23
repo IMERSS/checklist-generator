@@ -5,11 +5,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import { Stepper } from '../components/Stepper';
 import { Step1 } from './Step1';
 import Step2 from './Step2.container';
 import Step3 from './Step3.container';
+import C from '../constants';
 
 const theme = createMuiTheme({
     typography: {
@@ -78,7 +80,9 @@ const Page = ({ pageIndex, setPageIndex }) => {
                             Checklist Generator
                         </Typography>
                         <div>
-                            <GitHubIcon />
+                            <IconButton aria-label="github" className={classes.margin} onClick={() => window.open(C.GITHUB_URL, '_blank')}>
+                                <GitHubIcon />
+                            </IconButton>
                         </div>
                     </Toolbar>
                 </AppBar>

@@ -33,3 +33,13 @@ export const updateRowFormat = (rowId, format) => ({ type: UPDATE_ROW_FORMAT, pa
 
 export const SET_BUILDER_TAB = 'SET_BUILDER_TAB';
 export const setBuilderTab = (tab) => ({ type: SET_BUILDER_TAB, payload: { tab }});
+
+export const UPDATE_FORMAT = 'UPDATE_FORMAT';
+export const updateFormat = (format) => ({ type: UPDATE_FORMAT, payload: { format }});
+
+export const UPDATE_HTML_INDENT_WIDTH = 'UPDATE_HTML_INDENT_WIDTH';
+export const updateHtmlIndentWidth = (htmlIndentWidth) => ({ type: UPDATE_HTML_INDENT_WIDTH, payload: { htmlIndentWidth }});
+
+export const UPDATE_ROW_CLASS_PREFIX = 'UPDATE_ROW_CLASS_PREFIX';
+export const updateRowClassPrefix = (prefix) => ({ type: UPDATE_ROW_CLASS_PREFIX, payload: { prefix }});
+
