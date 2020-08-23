@@ -4,8 +4,8 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
 
-export const Stepper = ({ steps, activeStep }) => {
-    return (
+export const Stepper = ({ steps, activeStep }) => (
+    <div className="navStepper">
         <MUIStepper activeStep={activeStep}>
             {steps.map((label, index) => {
                 const stepProps = {};
@@ -20,5 +20,5 @@ export const Stepper = ({ steps, activeStep }) => {
                 );
             })}
         </MUIStepper>
-    )
-};
+    </div>
+);

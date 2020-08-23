@@ -1,8 +1,27 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import { Stepper } from '../components/Stepper';
 import { Step1 } from './Step1';
 import Step2 from './Step2.container';
 import { Step3 } from './Step3';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+    },
+}));
 
 const steps = [
     'Intro',
@@ -11,7 +30,10 @@ const steps = [
     'Generate'
 ];
 
+
 const Page = ({ pageIndex, setPageIndex }) => {
+    const classes = useStyles();
+
     const getContent = () => {
         if (pageIndex === 0) {
             return (
@@ -39,13 +61,24 @@ const Page = ({ pageIndex, setPageIndex }) => {
     };
 
     return (
-        <div className="app">
-            <h1>Checklist generator</h1>
+        <>
+            <AppBar position="fixed">
+                <Toolbar>
+                    <Typography variant="h6" className={classes.title}>
+                        Checklist Generator
+                    </Typography>
+                    <div>
+                        <InfoIcon />
+                        <GitHubIcon />
+                    </div>
+                </Toolbar>
+            </AppBar>
+            <div className="app">
+                <Stepper steps={steps} activeStep={pageIndex} />
 
-            <Stepper steps={steps} activeStep={pageIndex} />
-
-            {getContent()}
-        </div>
+                {getContent()}
+            </div>
+        </>
     );
 }
 

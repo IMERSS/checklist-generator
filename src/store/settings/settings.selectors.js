@@ -11,9 +11,6 @@ export const getRowData = createSelector(
     getRows,
     (sortedRows, rows) => {
         return sortedRows.map((rowId) => {
-
-            console.log("-->", rows[rowId]);
-
             return {
                 ...rows[rowId],
                 rowId

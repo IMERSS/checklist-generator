@@ -13,7 +13,6 @@ export const uploadFile = (file) => (dispatch) => {
         })
 };
 
-
 export const SET_PAGE_INDEX = 'SET_PAGE_INDEX';
 export const setPageIndex = (pageIndex) => ({ type: SET_PAGE_INDEX, payload: { pageIndex }});
 
