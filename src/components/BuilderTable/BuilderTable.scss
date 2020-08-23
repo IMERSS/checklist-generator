@@ -1,5 +1,5 @@
 .builderTable {
-    padding-bottom: 20px;
+    padding-bottom: 15px;
 
     .builderRow:first-child .indentCol {
         visibility: hidden;
@@ -38,3 +38,7 @@
     }
 }
 
+.invalidRow {
+    font-style: italic;
+    color: #990000;
+}

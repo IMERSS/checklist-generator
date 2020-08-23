@@ -30,3 +30,6 @@ export const toggleRowIndentation = (rowId) => ({ type: TOGGLE_ROW_INDENTATION, 
 
 export const UPDATE_ROW_FORMAT = 'UPDATE_ROW_FORMAT';
 export const updateRowFormat = (rowId, format) => ({ type: UPDATE_ROW_FORMAT, payload: { rowId, format }});
+
+export const SET_BUILDER_TAB = 'SET_BUILDER_TAB';
+export const setBuilderTab = (tab) => ({ type: SET_BUILDER_TAB, payload: { tab }});

@@ -11,9 +11,9 @@ describe('getBuilderLines', () => {
         ];
 
         const rowConfig = [
-            { colIndex: 0, indent: false, format: '%VALUE%' },
-            { colIndex: 1, indent: true, format: '%VALUE%' },
-            { colIndex: 2, indent: true, format: '%VALUE%' }
+            { colIndex: 0, indent: false, format: '{{it.VALUE}}' },
+            { colIndex: 1, indent: true, format: '{{it.VALUE}}' },
+            { colIndex: 2, indent: true, format: '{{it.VALUE}}' }
         ];
 
         expect(getBuilderLines(content, rowConfig)).toEqual(

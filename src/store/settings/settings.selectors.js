@@ -5,6 +5,7 @@ export const getData = (state) => state.settings.data;
 export const getPageIndex = (state) => state.settings.pageIndex;
 export const getRows = (state) => state.settings.rows;
 export const getSortedRows = (state) => state.settings.sortedRows;
+export const getBuilderTab = (state) => state.settings.builderTab;
 
 export const getRowData = createSelector(
     getSortedRows,

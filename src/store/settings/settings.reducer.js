@@ -2,12 +2,13 @@ import { nanoid } from 'nanoid';
 import * as actions from './settings.actions';
 import { removeArrayItem } from '../../helpers/utils';
 
-
 const initialState = {
     pageIndex: 0,
     data: null,
     rows: {},
-    sortedRows: []
+    sortedRows: [],
+    builderTab: 0,
+    indentType: "spaces"
 };
 
 const settingsReducer = (state = initialState, action) => {
@@ -24,8 +25,6 @@ const settingsReducer = (state = initialState, action) => {
             };
         case actions.SELECT_COLUMN: {
             const { rowId, colIndex } = action.payload;
-
-            console.log(action.payload);
 
             return {
                 ...state,
@@ -51,7 +50,7 @@ const settingsReducer = (state = initialState, action) => {
                     [newRowId]: {
                         colIndex: null,
                         indent: true,
-                        format: '%VALUE%'
+                        format: '{{it.VALUE}}'
                     }
                 }
             };
@@ -91,6 +90,13 @@ const settingsReducer = (state = initialState, action) => {
                 }
             }
         }
+        case actions.SET_BUILDER_TAB: {
+            return {
+                ...state,
+                builderTab: action.payload.tab
+            };
+        }
+
         default:
             return state;
     }

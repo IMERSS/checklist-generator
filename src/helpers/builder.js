@@ -17,8 +17,10 @@ export const getBuilderLines = (data, rowConfig) => {
                 return;
             }
 
+            const placeholders = getRowPlaceholders(data[i]);
+
             lines.push({
-                value: getFormattedCell(format, { VALUE: colValue }),
+                value: getFormattedCell(format, { VALUE: colValue, ...placeholders }),
                 indent: currIndent
             });
 
@@ -29,9 +31,18 @@ export const getBuilderLines = (data, rowConfig) => {
     return lines;
 };
 
+export const getRowPlaceholders = (row) => {
+    const placeholders = {};
+    row.forEach((i, index) => {
+        placeholders['COL' + (index+1)] = i;
+    });
+
+    return placeholders;
+};
+
 // needs to be passed all col data
 export const getFormattedCell = (format, placeholders) => {
-    let value = '[...]';
+    let value = '<span class="invalidRow">invalid syntax for this row</span>';
     try {
         value = squirrelly.render(format, placeholders);
     } catch (e) {

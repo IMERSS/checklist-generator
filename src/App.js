@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from './store';
 import Page from './pages/Page.container';
-import "./css/global.css";
+import "./css/global.scss";
 
 const App = () => (
     <Provider store={store}>

@@ -3,5 +3,11 @@
     border: 2px dotted #cccccc;
     padding: 20px;
     height: 400px;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: auto;
+    line-height: 26px;
+    font-size: 14px;
+    &>* {
+        font-size: inherit;
+    }
 }

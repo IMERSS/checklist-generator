@@ -1,15 +1,24 @@
 import React from 'react';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import { Stepper } from '../components/Stepper';
 import { Step1 } from './Step1';
 import Step2 from './Step2.container';
 import { Step3 } from './Step3';
+
+const theme = createMuiTheme({
+    typography: {
+        fontFamily: [
+            'Open Sans',
+            'sans-serif'
+        ].join(','),
+    }
+});
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -61,24 +70,25 @@ const Page = ({ pageIndex, setPageIndex }) => {
     };
 
     return (
-        <>
-            <AppBar position="fixed">
-                <Toolbar>
-                    <Typography variant="h6" className={classes.title}>
-                        Checklist Generator
-                    </Typography>
-                    <div>
-                        <InfoIcon />
-                        <GitHubIcon />
-                    </div>
-                </Toolbar>
-            </AppBar>
-            <div className="app">
-                <Stepper steps={steps} activeStep={pageIndex} />
+        <ThemeProvider theme={theme}>
+            <>
+                <AppBar position="fixed">
+                    <Toolbar>
+                        <Typography variant="h6" className={classes.title}>
+                            Checklist Generator
+                        </Typography>
+                        <div>
+                            <GitHubIcon />
+                        </div>
+                    </Toolbar>
+                </AppBar>
+                <div className="app">
+                    <Stepper steps={steps} activeStep={pageIndex} />
 
-                {getContent()}
-            </div>
-        </>
+                    {getContent()}
+                </div>
+            </>
+        </ThemeProvider>
     );
 }
 
