@@ -5,6 +5,10 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+.appBar div {
+  color: white;
+}
+
 .app {
   width: 1000px;
   margin: 80px auto 0;
@@ -15,7 +19,7 @@ footer {
 }
 
 div, span, select, option, p, body, label {
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .a {

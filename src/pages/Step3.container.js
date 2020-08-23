@@ -1,19 +1,21 @@
 import { connect } from 'react-redux';
 import * as actions from '../store/settings/settings.actions';
 import * as selectors from '../store/settings/settings.selectors';
-import { Step2 } from './Step2';
+import { Step3 } from './Step3';
 
 const mapStateToProps = (state) => ({
-    hasUploadedData: selectors.hasUploadedData(state)
+    hasUploadedData: selectors.hasUploadedData(state),
+    builderTab: selectors.getBuilderTab(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    onUploadFile: (file) => dispatch(actions.uploadFile(file))
+    onUploadFile: (file) => dispatch(actions.uploadFile(file)),
+    setBuilderTab: (tab) => dispatch(actions.setBuilderTab(tab))
 });
 
 const container = connect(
     mapStateToProps,
     mapDispatchToProps
-)(Step2);
+)(Step3);
 
 export default container;

@@ -1,0 +1,12 @@
+.dragDropUpload {
+  border: 5px dashed green;
+  background-color: #f7fff7;
+  padding: 50px;
+}
+
+.introPanel {
+  display: flex;
+  &>div {
+    flex: 1;
+  }
+}

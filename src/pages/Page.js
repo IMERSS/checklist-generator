@@ -9,7 +9,7 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import { Stepper } from '../components/Stepper';
 import { Step1 } from './Step1';
 import Step2 from './Step2.container';
-import { Step3 } from './Step3';
+import Step3 from './Step3.container';
 
 const theme = createMuiTheme({
     typography: {
@@ -72,7 +72,7 @@ const Page = ({ pageIndex, setPageIndex }) => {
     return (
         <ThemeProvider theme={theme}>
             <>
-                <AppBar position="fixed">
+                <AppBar position="fixed" className="appBar">
                     <Toolbar>
                         <Typography variant="h6" className={classes.title}>
                             Checklist Generator

@@ -4,11 +4,14 @@
     .builderRow:first-child .indentCol {
         visibility: hidden;
     }
+
+    &>div:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
 }
 
 .builderRow {
     display: flex;
-    border-bottom: 1px solid #cccccc;
 
     div {
         flex: 1;

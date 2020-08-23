@@ -4,8 +4,7 @@ import * as selectors from '../../store/settings/settings.selectors';
 import { BuilderTable } from './BuilderTable';
 
 const mapStateToProps = (state) => ({
-    rows: selectors.getRowData(state),
-    builderTab: selectors.getBuilderTab(state)
+    rows: selectors.getRowData(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -13,8 +12,7 @@ const mapDispatchToProps = (dispatch) => ({
     onDeleteRow: (rowId) => dispatch(actions.deleteRow(rowId)),
     onSelectColumn: (rowId, colIndex) => dispatch(actions.selectColumn(rowId, colIndex)),
     onToggleRowIndentation: (rowId) => dispatch(actions.toggleRowIndentation(rowId)),
-    onUpdateRowFormat: (rowId, rowFormat) => dispatch(actions.updateRowFormat(rowId, rowFormat)),
-    setBuilderTab: (tab) => dispatch(actions.setBuilderTab(tab))
+    onUpdateRowFormat: (rowId, rowFormat) => dispatch(actions.updateRowFormat(rowId, rowFormat))
 });
 
 const container = connect(

@@ -8,7 +8,10 @@ const initialState = {
     rows: {},
     sortedRows: [],
     builderTab: 0,
-    indentType: "spaces"
+    format: "html", // text/html
+    textIndentNumSpaces: 4,
+    htmlIndentWidth: 50,
+    rowClassPrefix: "cg-row-"
 };
 
 const settingsReducer = (state = initialState, action) => {
