@@ -33,6 +33,11 @@ export const Step3 = ({ onPrev, onNext, builderTab, setBuilderTab }) => (
         </Tabs>
         <TabPanel value={builderTab} index={0}>
             <BuilderTable />
+
+            <footer>
+                <Button variant="outlined" size="small" color="secondary" onClick={onPrev} style={{ marginRight: 10, minWidth: 20 }}>&laquo;</Button>
+                <Button variant="outlined" size="small" color="primary" onClick={onNext}>Continue &raquo;</Button>
+            </footer>
         </TabPanel>
         <TabPanel value={builderTab} index={1}>
             <Settings />
@@ -40,10 +45,5 @@ export const Step3 = ({ onPrev, onNext, builderTab, setBuilderTab }) => (
         <TabPanel value={builderTab} index={2}>
             <Help />
         </TabPanel>
-
-        <footer>
-            <Button variant="outlined" size="small" color="secondary" onClick={onPrev} style={{ marginRight: 10, minWidth: 20 }}>&laquo;</Button>
-            <Button variant="outlined" size="small" color="primary" onClick={onNext}>Continue &raquo;</Button>
-        </footer>
     </>
 );

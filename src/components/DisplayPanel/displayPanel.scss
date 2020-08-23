@@ -10,4 +10,8 @@
     &>* {
         font-size: inherit;
     }
+
+    &.textFormat {
+        white-space: pre-wrap;
+    }
 }

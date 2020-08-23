@@ -4,11 +4,13 @@ import * as selectors from '../store/settings/settings.selectors';
 import { Step2 } from './Step2';
 
 const mapStateToProps = (state) => ({
+    uploadedFilename: selectors.getUploadedFilename(state),
     hasUploadedData: selectors.hasUploadedData(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    onUploadFile: (file) => dispatch(actions.uploadFile(file))
+    onUploadFile: (file) => dispatch(actions.uploadFile(file)),
+    onReset: () => dispatch(actions.onReset())
 });
 
 const container = connect(

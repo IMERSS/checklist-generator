@@ -4,11 +4,12 @@ import { removeArrayItem } from '../../helpers/utils';
 
 const initialState = {
     pageIndex: 0,
+    uploadedFilename: '',
     data: null,
     rows: {},
     sortedRows: [],
     builderTab: 0,
-    format: "html", // text/html
+    format: "html",
     textIndentNumSpaces: 4,
     htmlIndentWidth: 50,
     rowClassPrefix: "cg-row-"
@@ -16,6 +17,16 @@ const initialState = {
 
 const settingsReducer = (state = initialState, action) => {
     switch (action.type) {
+        case actions.RESET: {
+            return {
+                ...state,
+                data: null,
+                uploadedFilename: '',
+                rows: {},
+                sortedRows: [],
+                builderTab: 0
+            };
+        }
         case actions.SET_PAGE_INDEX:
             return {
                 ...state,
@@ -24,6 +35,7 @@ const settingsReducer = (state = initialState, action) => {
         case actions.SET_DATA:
             return {
                 ...state,
+                uploadedFilename: action.payload.uploadedFilename,
                 data: action.payload.data
             };
         case actions.SELECT_COLUMN: {
@@ -117,6 +129,13 @@ const settingsReducer = (state = initialState, action) => {
                 rowClassPrefix: action.payload.prefix
             };
         }
+        case actions.UPDATE_TEXT_INDENT_NUM_SPACES: {
+            return {
+                ...state,
+                textIndentNumSpaces: action.payload.numSpaces
+            };
+        }
+
         default:
             return state;
     }

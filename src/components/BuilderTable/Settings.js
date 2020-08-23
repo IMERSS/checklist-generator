@@ -1,6 +1,8 @@
 import React from 'react';
 
-const Settings = ({ format, onChangeFormat, htmlIndentWidth, onChangeHtmlIndentWidth, rowClassPrefix, onChangeRowClassPrefix }) => {
+const Settings = ({ format, onChangeFormat, htmlIndentWidth, onChangeHtmlIndentWidth, rowClassPrefix,
+    onChangeRowClassPrefix, textIndentNumSpaces, onChangeTextIndentNumSpaces }) => {
+
     const getRows = () => {
         if (format === "html") {
             return (
@@ -10,8 +12,8 @@ const Settings = ({ format, onChangeFormat, htmlIndentWidth, onChangeHtmlIndentW
                             Indent width
                         </div>
                         <div>
-                            <input type="text" value={htmlIndentWidth} style={{ width: 30 }}
-                               onChange={(e) => onChangeHtmlIndentWidth(e.target.value)} />px
+                            <input type="number" value={htmlIndentWidth} style={{ width: 40 }}
+                               onChange={(e) => onChangeHtmlIndentWidth(e.target.value, 10)} />px
                         </div>
                     </div>
                     <div>
@@ -26,6 +28,18 @@ const Settings = ({ format, onChangeFormat, htmlIndentWidth, onChangeHtmlIndentW
                 </>
             );
         }
+
+        return (
+            <div>
+                <div className="settingsCol1">
+                    Num character indent
+                </div>
+                <div>
+                    <input type="number" value={textIndentNumSpaces} style={{ width: 40 }}
+                           onChange={(e) => onChangeTextIndentNumSpaces(e.target.value, 10)} />
+                </div>
+            </div>
+        );
     };
 
     return (

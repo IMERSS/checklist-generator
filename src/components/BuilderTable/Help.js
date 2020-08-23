@@ -8,7 +8,7 @@ const Help = () => (
             on the Settings tab) and customizing the content of the rows however you want.
         </div>
 
-        <h2>Build Table Placeholders</h2>
+        <h2>Placeholders</h2>
         <p>
             This application uses <a href="https://squirrelly.js.org/" target="_blank" rel="noopener noreferrer">SquirrellyJS</a> as the
             template engine. That's what allows you to enter <i>placeholders</i> in the row fields, which get

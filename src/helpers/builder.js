@@ -1,6 +1,6 @@
 import * as squirrelly from 'squirrelly';
 
-export const getBuilderLines = (data, rowConfig) => {
+export const getBuilderLines = (data, rowConfig, generationFormat) => {
     const lastSeenColValues = [];
     const lines = [];
 
@@ -20,7 +20,7 @@ export const getBuilderLines = (data, rowConfig) => {
             const placeholders = getRowPlaceholders(data[i]);
 
             lines.push({
-                value: getFormattedCell(format, { VALUE: colValue, ...placeholders }),
+                value: getFormattedCell(format, { VALUE: colValue, ...placeholders }, generationFormat),
                 indent: currIndent
             });
 
@@ -40,21 +40,32 @@ export const getRowPlaceholders = (row) => {
     return placeholders;
 };
 
-// needs to be passed all col data
-export const getFormattedCell = (format, placeholders) => {
-    let value = '<span class="invalidRow">invalid syntax for this row</span>';
+export const getFormattedCell = (format, placeholders, generationFormat) => {
+    let errorStr = 'invalid syntax for this row';
+    let value = generationFormat === 'html' ? `<span class="invalidRow">${errorStr}</span>` : `--- ${errorStr} ---`;
     try {
         value = squirrelly.render(format, placeholders);
     } catch (e) {
-        console.log(e);
+        // console.log("error parsing: ", e);
     }
     return value;
 };
 
-export const getBuilderHtml = (lines, format = "html") => {
-    let html = '';
+export const getBuilderContent = (data, rowData, format, textIndentNumSpaces, htmlIndentWidth) => {
+    const lines = getBuilderLines(data, rowData, format);
+    let content = '';
+
+    const textSpaces = parseInt(textIndentNumSpaces || 0, 10);
+    const htmlIndent = parseInt(htmlIndentWidth || 0, 10);
+
     lines.forEach(({ value, indent}) => {
-        html += `<div>${'&nbsp'.repeat((indent-1)*4) + value}</div>`;
+        if (format === "html") {
+            const pxWidth = (indent-1) * htmlIndent;
+            content += `<div style="padding-left: ${pxWidth}px">${value}</div>`;
+        } else {
+            content += ' '.repeat((indent-1)*textSpaces) + value + '\n';
+        }
     });
-    return html;
+
+    return content;
 };

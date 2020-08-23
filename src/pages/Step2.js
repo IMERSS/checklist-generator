@@ -1,12 +1,14 @@
 import React from 'react';
-import Button from "@material-ui/core/Button";
+import Button from '@material-ui/core/Button';
+import { useDropzone } from 'react-dropzone';
 import "./Page2.scss";
 
-export const Step2 = ({ onPrev, onNext, hasUploadedData, onUploadFile }) => {
-    const onChange = (e) => {
-        const file = e.target.files[0];
-        onUploadFile(file);
-    };
+export const Step2 = ({ onPrev, onNext, uploadedFilename, hasUploadedData, onUploadFile, onReset }) => {
+    const onDrop = React.useCallback((files) => {
+        onUploadFile(files[0]);
+    }, []);
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
     const getButtons = () => {
         if (!hasUploadedData) {
@@ -21,17 +23,37 @@ export const Step2 = ({ onPrev, onNext, hasUploadedData, onUploadFile }) => {
         );
     }
 
+    const getContent = () => {
+        if (hasUploadedData) {
+            return (
+                <p>
+                    You have an uploaded file: <b>{uploadedFilename}</b> (data is stored in your browser's local storage). <a href="#" onClick={onReset}>Click here to reset</a> and upload another.
+                </p>
+            );
+        }
+
+        return (
+            <>
+                <div className="dragDropUpload" {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    {
+                        isDragActive ?
+                            <p>Drop the file here ...</p> :
+                            <p>Drag and drop your file here, or click to select a file.</p>
+                    }
+                </div>
+
+                <p>
+                    If you don't have a file on hand, you can use this <a href="./demo-data.csv" target="_blank">demo file</a> that illustrates a typical
+                    compatible format.
+                </p>
+            </>
+        );
+    };
+
     return (
         <div>
-            <div className="dragDropUpload">
-                <input type="file" onChange={onChange} />
-            </div>
-
-            <p>
-                If you don't have a file on hand, you can use this <a href="">demo file</a> that illustrates a typical
-                compatible format.
-            </p>
-
+            {getContent()}
             {getButtons()}
         </div>
     );

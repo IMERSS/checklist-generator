@@ -3,8 +3,10 @@ import * as selectors from '../../store/settings/settings.selectors';
 import DisplayPanel from './DisplayPanel';
 
 const mapStateToProps = (state) => ({
+    format: selectors.getFormat(state),
     content: selectors.getContent(state)
 });
+
 const container = connect(
     mapStateToProps
 )(DisplayPanel);

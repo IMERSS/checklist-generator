@@ -7,6 +7,7 @@ export const uploadFile = (file) => (dispatch) => {
             dispatch({
                 type: SET_DATA,
                 payload: {
+                    uploadedFilename: file.path,
                     data: resp.data
                 }
             });
@@ -43,3 +44,8 @@ export const updateHtmlIndentWidth = (htmlIndentWidth) => ({ type: UPDATE_HTML_I
 export const UPDATE_ROW_CLASS_PREFIX = 'UPDATE_ROW_CLASS_PREFIX';
 export const updateRowClassPrefix = (prefix) => ({ type: UPDATE_ROW_CLASS_PREFIX, payload: { prefix }});
 
+export const UPDATE_TEXT_INDENT_NUM_SPACES = 'UPDATE_TEXT_INDENT_NUM_SPACES';
+export const updateTextIndentNumSpaces = (numSpaces) => ({ type: UPDATE_TEXT_INDENT_NUM_SPACES, payload: { numSpaces }});
+
+export const RESET = 'RESET';
+export const onReset = () => ({ type: 'RESET' });
