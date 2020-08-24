@@ -1,7 +1,8 @@
 {
-  "name": "checklist-generator-app",
-  "version": "0.1.0",
+  "name": "checklist-generator",
+  "version": "1.0.0",
   "private": true,
+  "homepage": "http://benkeen.github.io/checklist-generator",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
@@ -25,6 +26,8 @@
     "squirrelly": "^8.0.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
