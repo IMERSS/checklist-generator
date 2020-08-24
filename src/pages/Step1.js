@@ -10,13 +10,13 @@ export const Step1 = ({ onNext }) => (
                 <p>
                     This is a simple, free online tool that <i>takes a CSV file that looks like this...</i>
                 </p>
-                <img src="./table.png" width={415} height={252} alt="Original CSV table format" />
+                <img src="./table.png" width={415} height={252} alt="Original CSV table format example" />
             </div>
             <div>
                 <p>
                     and <i>converts it to a checklist that looks like this</i>...
                 </p>
-                <img src="./checklist.png" width={230} height={420} alt="Generated checklist" />
+                <img src="./checklist.png" width={230} height={395} alt="Generated checklist example" />
             </div>
         </div>
 

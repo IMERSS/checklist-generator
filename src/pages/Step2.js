@@ -6,7 +6,7 @@ import "./Page2.scss";
 export const Step2 = ({ onPrev, onNext, uploadedFilename, hasUploadedData, onUploadFile, onReset }) => {
     const onDrop = React.useCallback((files) => {
         onUploadFile(files[0]);
-    }, []);
+    }, [onUploadFile]);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
@@ -27,7 +27,7 @@ export const Step2 = ({ onPrev, onNext, uploadedFilename, hasUploadedData, onUpl
         if (hasUploadedData) {
             return (
                 <p>
-                    You have an uploaded file: <b>{uploadedFilename}</b> (data is stored in your browser's local storage). <a href="#" onClick={onReset}>Click here to reset</a> and upload another.
+                    You have an uploaded file: <b>{uploadedFilename}</b> (data is stored in your browser's local storage). <span className="link" onClick={onReset}>Click here to reset</span> and upload another.
                 </p>
             );
         }

@@ -35,7 +35,7 @@ export const BuilderTable = ({ rows, onAddRow, onDeleteRow, onSelectColumn, onTo
             <div className="builderTable">
                 {rowElements}
             </div>
-            <a href="#" className="addRowLink" onClick={(e) => { e.preventDefault(); onAddRow(); }}>Add Row &raquo;</a>
+            <span className="link" onClick={(e) => { e.preventDefault(); onAddRow(); }}>Add Row &raquo;</span>
 
             <DisplayPanel />
         </>
