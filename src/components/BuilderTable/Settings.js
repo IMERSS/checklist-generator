@@ -18,7 +18,7 @@ const Settings = ({ format, onChangeFormat, htmlIndentWidth, onChangeHtmlIndentW
                     </div>
                     <div>
                         <div className="settingsCol1">
-                            Row class prefix
+                            HTML class prefix
                         </div>
                         <div>
                             <input type="text" value={rowClassPrefix}

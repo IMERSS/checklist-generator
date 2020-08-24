@@ -4,7 +4,7 @@ import DisplayPanel from './DisplayPanel';
 
 const mapStateToProps = (state) => ({
     format: selectors.getFormat(state),
-    content: selectors.getContent(state)
+    content: selectors.getPreviewContent(state)
 });
 
 const container = connect(

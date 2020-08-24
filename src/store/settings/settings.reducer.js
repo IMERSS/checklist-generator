@@ -12,7 +12,7 @@ const initialState = {
     format: "html",
     textIndentNumSpaces: 4,
     htmlIndentWidth: 50,
-    rowClassPrefix: "cg-row-"
+    rowClassPrefix: "cg-col-"
 };
 
 const settingsReducer = (state = initialState, action) => {

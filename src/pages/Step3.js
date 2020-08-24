@@ -5,18 +5,8 @@ import Tab from "@material-ui/core/Tab";
 import BuilderTable from '../components/BuilderTable/BuilderTable.container';
 import Settings from "../components/BuilderTable/Settings.container";
 import Help from "../components/BuilderTable/Help";
+import TabPanel from "../components/TabPanel";
 
-const TabPanel = ({ children, value, index }) => {
-    if (value !== index) {
-        return null;
-    }
-
-    return (
-        <div style={{ padding: "20px 0 0" }}>
-            {children}
-        </div>
-    );
-}
 
 export const Step3 = ({ onPrev, onNext, builderTab, setBuilderTab }) => (
     <>
@@ -25,7 +15,6 @@ export const Step3 = ({ onPrev, onNext, builderTab, setBuilderTab }) => (
             indicatorColor="primary"
             textColor="primary"
             onChange={(e, newValue) => setBuilderTab(newValue)}
-            aria-label="disabled tabs example"
         >
             <Tab label="Build" />
             <Tab label="Settings" />

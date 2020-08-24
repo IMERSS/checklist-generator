@@ -40,7 +40,7 @@ export const getColumns = createSelector(
     }
 );
 
-export const getContent = createSelector(
+export const getPreviewContent = createSelector(
     getData,
     getRowData,
     getFormat,
@@ -49,4 +49,32 @@ export const getContent = createSelector(
     (data, rowData, format, textIndentNumSpaces, htmlIndentWidth) => (
         getBuilderContent(data, rowData, format, textIndentNumSpaces, htmlIndentWidth)
     )
+);
+
+export const getGeneratedContent = createSelector(
+    getData,
+    getRowData,
+    getFormat,
+    getTextIndentNumSpaces,
+    getHtmlIndentWidth,
+    getRowClassPrefix,
+    (data, rowData, format, textIndentNumSpaces, htmlIndentWidth, rowClassPrefix) => (
+        getBuilderContent(data, rowData, format, textIndentNumSpaces, htmlIndentWidth, rowClassPrefix, false)
+    )
+);
+
+export const getGeneratedCss = createSelector(
+    getRowData,
+    getHtmlIndentWidth,
+    getRowClassPrefix,
+    (rowData, indentWidth, classPrefix) => {
+        const lines = [];
+        const indentedRows = rowData.filter(({ indent }) => indent);
+
+        indentedRows.forEach((row, index) => {
+            lines.push(`.${classPrefix}indent-${index+1} { margin-left: ${indentWidth * (index)}px; }`);
+        });
+
+        return lines.join("\n");
+    }
 );

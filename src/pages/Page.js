@@ -11,6 +11,7 @@ import { Stepper } from '../components/Stepper';
 import { Step1 } from './Step1';
 import Step2 from './Step2.container';
 import Step3 from './Step3.container';
+import Step4 from './Step4.container';
 import C from '../constants';
 
 const theme = createMuiTheme({
@@ -64,6 +65,13 @@ const Page = ({ pageIndex, setPageIndex }) => {
                 <Step3
                     onPrev={() => setPageIndex(pageIndex - 1)}
                     onNext={() => setPageIndex(pageIndex + 1)}
+                />
+            );
+        } else if (pageIndex === 3) {
+            return (
+                <Step4
+                    onPrev={() => setPageIndex(pageIndex - 1)}
+                    onReturn={() => setPageIndex(pageIndex - 3)}
                 />
             );
         }

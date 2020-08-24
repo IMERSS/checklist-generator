@@ -5,7 +5,7 @@ import DisplayPanel from '../DisplayPanel/DisplayPanel.container';
 import "./BuilderTable.scss";
 
 export const BuilderTable = ({ rows, onAddRow, onDeleteRow, onSelectColumn, onToggleRowIndentation, onUpdateRowFormat }) => {
-    let rowElements = <p>No rows.</p>;
+    let rowElements = <p>Click the Add Row link below to start building your checklist.</p>;
 
     if (rows.length) {
         rowElements = rows.map(({ rowId, colIndex, format, indent }, rowIndex) => (

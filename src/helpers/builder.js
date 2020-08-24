@@ -4,11 +4,11 @@ export const getBuilderLines = (data, rowConfig, generationFormat) => {
     const lastSeenColValues = [];
     const lines = [];
 
-    for (let i=1; i<data.length; i++) {
+    for (let row=1; row<data.length; row++) {
         let currIndent = 0;
         rowConfig.forEach((config) => {
             const { colIndex, format, indent } = config; // format
-            const colValue = data[i][colIndex];
+            const colValue = data[row][colIndex];
 
             currIndent = (indent) ? currIndent + 1 : currIndent;
 
@@ -17,9 +17,10 @@ export const getBuilderLines = (data, rowConfig, generationFormat) => {
                 return;
             }
 
-            const placeholders = getRowPlaceholders(data[i]);
+            const placeholders = getRowPlaceholders(data[row]);
 
             lines.push({
+                colIndex,
                 value: getFormattedCell(format, { VALUE: colValue, ...placeholders }, generationFormat),
                 indent: currIndent
             });
@@ -51,21 +52,34 @@ export const getFormattedCell = (format, placeholders, generationFormat) => {
     return value;
 };
 
-export const getBuilderContent = (data, rowData, format, textIndentNumSpaces, htmlIndentWidth) => {
+export const getBuilderContent = (data, rowData, format, textIndentNumSpaces, htmlIndentWidth, rowClassPrefix, isPreview = true) => {
     const lines = getBuilderLines(data, rowData, format);
     let content = '';
 
     const textSpaces = parseInt(textIndentNumSpaces || 0, 10);
     const htmlIndent = parseInt(htmlIndentWidth || 0, 10);
 
-    lines.forEach(({ value, indent}) => {
-        if (format === "html") {
-            const pxWidth = (indent-1) * htmlIndent;
-            content += `<div style="padding-left: ${pxWidth}px">${value}</div>`;
-        } else {
-            content += ' '.repeat((indent-1)*textSpaces) + value + '\n';
-        }
-    });
+    // a little inelegant, but for previewing we just generate HTML with the indentation hardcoded. For the actual
+    // generation we generate the final markup with the appropriate CSS separately
+    if (isPreview) {
+        lines.forEach(({ value, indent}) => {
+            if (format === "html") {
+                const pxWidth = (indent-1) * htmlIndent;
+                content += `<div style="padding-left: ${pxWidth}px">${value}</div>`;
+            } else {
+                content += ' '.repeat((indent-1)*textSpaces) + value + '\n';
+            }
+        });
+    } else {
+        lines.forEach(({ value, colIndex, indent }) => {
+            if (format === "html") {
+                const cls = `${rowClassPrefix}${colIndex+1} ${rowClassPrefix}indent-${indent}`;
+                content += `<div class="${cls}">${value}</div>\n`;
+            } else {
+                content += ' '.repeat((indent-1)*textSpaces) + value + '\n';
+            }
+        });
+    }
 
     return content;
 };
