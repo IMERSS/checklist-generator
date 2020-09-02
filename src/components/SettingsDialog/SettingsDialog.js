@@ -11,7 +11,7 @@ import "./SettingsDialog.scss";
 const SettingsDialog = ({ onClose, open, settingsStr }) => (
     <Dialog
         disableBackdropClick
-        disableEscapeKeyDown
+        onEscapeKeyDown={onClose}
         aria-labelledby="confirmation-dialog-title"
         maxWidth="md"
         open={open}

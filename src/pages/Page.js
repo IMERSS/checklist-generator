@@ -96,7 +96,6 @@ const Page = ({ pageIndex, setPageIndex }) => {
                 </AppBar>
                 <div className="app">
                     <Stepper steps={steps} activeStep={pageIndex} />
-
                     {getContent()}
                 </div>
             </>

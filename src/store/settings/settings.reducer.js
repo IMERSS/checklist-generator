@@ -12,7 +12,8 @@ const initialState = {
     format: "html", // "html", "text", "rtf"
     textIndentNumSpaces: 4,
     htmlIndentWidth: 50,
-    rowClassPrefix: "cg-col-"
+    rowClassPrefix: "cg-col-",
+    loadSettingsError: null
 };
 
 const settingsReducer = (state = initialState, action) => {
@@ -52,7 +53,14 @@ const settingsReducer = (state = initialState, action) => {
                 }
             };
         }
-        case actions.ADD_ROW:
+        case actions.ADD_ROW: {
+            const newRowSettings = {
+                colIndex: null,
+                indent: true,
+                format: '{{it.VALUE}}',
+                ...action.payload
+            };
+
             const newRowId = nanoid(6);
             return {
                 ...state,
@@ -62,13 +70,10 @@ const settingsReducer = (state = initialState, action) => {
                 ],
                 rows: {
                     ...state.rows,
-                    [newRowId]: {
-                        colIndex: null,
-                        indent: true,
-                        format: '{{it.VALUE}}'
-                    }
+                    [newRowId]: newRowSettings
                 }
             };
+        }
         case actions.DELETE_ROW: {
             const newSortedRows = removeArrayItem(state.sortedRows, action.payload.rowId);
             const newRows = { ...state.rows };
@@ -78,6 +83,13 @@ const settingsReducer = (state = initialState, action) => {
                 ...state,
                 sortedRows: newSortedRows,
                 rows: newRows
+            };
+        }
+        case actions.CLEAR_ROWS: {
+            return {
+                ...state,
+                sortedRows: [],
+                rows: {}
             };
         }
         case actions.TOGGLE_ROW_INDENTATION: {
@@ -134,6 +146,18 @@ const settingsReducer = (state = initialState, action) => {
                 ...state,
                 textIndentNumSpaces: action.payload.numSpaces
             };
+        }
+        case actions.ERROR_PARSING_SETTINGS: {
+            return {
+                ...state,
+                loadSettingsError: action.payload.error
+            };
+        }
+        case actions.CLEAR_SETTINGS_ERROR: {
+            return {
+                ...state,
+                loadSettingsError: null
+            }
         }
 
         default:

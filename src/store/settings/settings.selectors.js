@@ -11,6 +11,7 @@ export const getFormat = (state) => state.settings.format;
 export const getTextIndentNumSpaces = (state) => state.settings.textIndentNumSpaces;
 export const getHtmlIndentWidth = (state) => state.settings.htmlIndentWidth;
 export const getRowClassPrefix = (state) => state.settings.rowClassPrefix;
+export const getSettingsError = (state) => state.settings.loadSettingsError;
 
 export const getRowData = createSelector(
     getSortedRows,

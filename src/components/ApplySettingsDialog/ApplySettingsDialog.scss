@@ -1,0 +1,17 @@
+.applySettingsField {
+  border: 1px solid #cccccc;
+  padding: 15px;
+  white-space: pre-wrap;
+  color: #666666;
+  height: 300px;
+  font-size: 13px;
+  overflow-y: scroll;
+  margin: 10px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.error {
+  color: #990000;
+  margin: 10px 0 5px;
+}

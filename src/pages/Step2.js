@@ -1,9 +1,12 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { useDropzone } from 'react-dropzone';
+import ApplySettingsDialog from '../components/ApplySettingsDialog/ApplySettingsDialog.container';
 import "./Page2.scss";
 
 export const Step2 = ({ onPrev, onNext, uploadedFilename, hasUploadedData, onUploadFile, onReset }) => {
+    const [applySettingsDialogVisible, setApplySettingsDialogVisibility] = React.useState(false);
+
     const onDrop = React.useCallback((files) => {
         onUploadFile(files[0]);
     }, [onUploadFile]);
@@ -19,6 +22,8 @@ export const Step2 = ({ onPrev, onNext, uploadedFilename, hasUploadedData, onUpl
             <footer>
                 <Button variant="outlined" size="small" color="secondary" onClick={onPrev} style={{ marginRight: 10, minWidth: 20 }}>&laquo;</Button>
                 <Button variant="outlined" size="small" color="primary" onClick={onNext}>Continue &raquo;</Button>
+                <span className="buttonDivider">|</span>
+                <Button variant="outlined" size="small" color="default" onClick={() => setApplySettingsDialogVisibility(true)}>Load Saved Settings</Button>
             </footer>
         );
     }
@@ -55,6 +60,11 @@ export const Step2 = ({ onPrev, onNext, uploadedFilename, hasUploadedData, onUpl
         <div>
             {getContent()}
             {getButtons()}
+
+            <ApplySettingsDialog
+                open={applySettingsDialogVisible}
+                onClose={() => setApplySettingsDialogVisibility(false)}
+            />
         </div>
     );
 };

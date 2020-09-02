@@ -21,10 +21,13 @@ export const SELECT_COLUMN = 'SELECT_COLUMN';
 export const selectColumn = (rowId, colIndex) => ({ type: SELECT_COLUMN, payload: { rowId, colIndex }});
 
 export const ADD_ROW = 'ADD_ROW';
-export const addRow = () => ({ type: ADD_ROW });
+export const addRow = (rowSettings) => ({ type: ADD_ROW, payload: { ...rowSettings } });
 
 export const DELETE_ROW = 'DELETE_ROW';
 export const deleteRow = (rowId) => ({ type: DELETE_ROW, payload: { rowId }});
+
+export const CLEAR_ROWS = 'CLEAR_ROWS';
+export const clearRows = () => ({ type: CLEAR_ROWS });
 
 export const TOGGLE_ROW_INDENTATION = 'TOGGLE_ROW_INDENTATION';
 export const toggleRowIndentation = (rowId) => ({ type: TOGGLE_ROW_INDENTATION, payload: { rowId }});
@@ -49,3 +52,60 @@ export const updateTextIndentNumSpaces = (numSpaces) => ({ type: UPDATE_TEXT_IND
 
 export const RESET = 'RESET';
 export const onReset = () => ({ type: 'RESET' });
+
+export const CLEAR_SETTINGS_ERROR = 'CLEAR_SETTINGS_ERROR';
+export const clearSettingsError = () => ({ type: CLEAR_SETTINGS_ERROR });
+
+export const ERROR_PARSING_SETTINGS = 'ERROR_PARSING_SETTINGS';
+export const errorParsingSettings = (error) => ({
+    type: ERROR_PARSING_SETTINGS,
+    payload: {
+        error
+    }
+});
+
+export const SET_SAVED_SETTINGS = 'SET_SAVED_SETTINGS';
+export const setSavedSettings = (settings) => ({ type: SET_SAVED_SETTINGS, payload: { ...settings } });
+
+export const processSettings = (settingsStr) => (dispatch) => {
+    dispatch(clearSettingsError());
+
+    try {
+        const settings = JSON.parse(settingsStr);
+
+        // extract as much valid setting data as we can. TODO The validation is totally feeble here... it'd be much better to
+        // define a schema for the settings and validate against that
+
+        if (settings.rows && Array.isArray(settings.rows)) {
+            dispatch(clearRows());
+            settings.rows.forEach((row) => {
+                if (!row.hasOwnProperty('colIndex') || !row.hasOwnProperty('indent') || !row.hasOwnProperty('format')) {
+                    return;
+                }
+                if (row.indent !== true && row.indent !== false) {
+                    return;
+                }
+                dispatch(addRow({
+                    colIndex: row.colIndex,
+                    indent: row.indent,
+                    format: row.format
+                }));
+            });
+        }
+
+        if (settings.format && ['html', 'rtf', 'text'].indexOf(settings.format) !== -1) {
+            dispatch(updateFormat(settings.format));
+        }
+        if (settings.textIndentNumSpaces) {
+            dispatch(updateTextIndentNumSpaces(settings.textIndentNumSpaces));
+        }
+        if (settings.htmlIndentWidth) {
+            dispatch(updateHtmlIndentWidth(settings.htmlIndentWidth));
+        }
+        if (settings.rowClassPrefix) {
+            dispatch(updateRowClassPrefix(settings.rowClassPrefix));
+        }
+    } catch (e) {
+        dispatch(errorParsingSettings(e.message));
+    }
+};

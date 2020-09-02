@@ -104,7 +104,7 @@ ${generatedContent}
                 <Button variant="outlined" size="small" color="secondary" onClick={onPrev}
                         style={{ marginRight: 10, minWidth: 20 }}>&laquo;</Button>
                 <Button variant="outlined" size="small" color="primary" onClick={onReturn}>Start again</Button>
-                <span style={{ margin: "0 20px" }}>|</span>
+                <span className="buttonDivider">|</span>
 
                 <Button variant="outlined" size="small" color="default" onClick={() => setSettingsDialogVisibility(true)}>Save Settings</Button>
             </footer>
