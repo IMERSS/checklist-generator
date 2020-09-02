@@ -13,7 +13,8 @@ const initialState = {
     textIndentNumSpaces: 4,
     htmlIndentWidth: 50,
     rowClassPrefix: "cg-col-",
-    loadSettingsError: null
+    loadSettingsError: null,
+    applySettingsDialogOpen: false
 };
 
 const settingsReducer = (state = initialState, action) => {
@@ -157,9 +158,20 @@ const settingsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loadSettingsError: null
-            }
+            };
         }
-
+        case actions.OPEN_APPLY_SETTINGS_DIALOG: {
+            return {
+                ...state,
+                applySettingsDialogOpen: true
+            };
+        }
+        case actions.CLOSE_APPLY_SETTINGS_DIALOG: {
+            return {
+                ...state,
+                applySettingsDialogOpen: false
+            };
+        }
         default:
             return state;
     }

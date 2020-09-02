@@ -24,7 +24,7 @@ const SettingsDialog = ({ onClose, open, settingsStr }) => (
                 computer? Or what if your browser's memory gets wiped? Tragedy! Your settings will be lost and you'll
                 need to configure it all over again. The section below generates a simple JSON formatted version of the
                 settings you've entered in the UI. You may want to back these up somewhere. When you come back, you can
-                optionally re-enter them on Step 2.
+                optionally re-enter them on Step 3.
             </div>
 
             <div className="settingsDisplay">

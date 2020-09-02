@@ -1,3 +1,4 @@
+import { showNotification } from '../../helpers/utils';
 import { parseCsv } from '../../helpers/csv';
 
 export const SET_DATA = 'SET_DATA';
@@ -105,7 +106,18 @@ export const processSettings = (settingsStr) => (dispatch) => {
         if (settings.rowClassPrefix) {
             dispatch(updateRowClassPrefix(settings.rowClassPrefix));
         }
+
+        dispatch(closeApplySettingsDialog());
+
+        showNotification("Done!", "Your settings have been applied.");
     } catch (e) {
         dispatch(errorParsingSettings(e.message));
     }
 };
+
+
+export const OPEN_APPLY_SETTINGS_DIALOG = 'OPEN_APPLY_SETTINGS_DIALOG';
+export const openApplySettingsDialog = () => ({ type: OPEN_APPLY_SETTINGS_DIALOG });
+
+export const CLOSE_APPLY_SETTINGS_DIALOG = 'CLOSE_APPLY_SETTINGS_DIALOG';
+export const closeApplySettingsDialog = () => ({ type: CLOSE_APPLY_SETTINGS_DIALOG });

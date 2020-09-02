@@ -7,7 +7,7 @@ const Settings = ({ format, onChangeFormat, htmlIndentWidth, onChangeHtmlIndentW
         let rows = [];
         if (format === "html") {
             rows.push(
-                <div>
+                <div key="indentWidth">
                     <div className="settingsCol1">
                         Indent width
                     </div>
@@ -25,7 +25,7 @@ const Settings = ({ format, onChangeFormat, htmlIndentWidth, onChangeHtmlIndentW
                 </div>
             );
             rows.push(
-                <div>
+                <div key="htmlClassPrefix">
                     <div className="settingsCol1">
                         HTML class prefix
                     </div>
@@ -47,7 +47,7 @@ const Settings = ({ format, onChangeFormat, htmlIndentWidth, onChangeHtmlIndentW
         }
         if (format === "text" || format === "rtf") {
             rows.push(
-                <div>
+                <div key="numCharIndent">
                     <div className="settingsCol1">
                         Num character indent
                     </div>
