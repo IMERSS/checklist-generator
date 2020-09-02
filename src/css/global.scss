@@ -32,6 +32,7 @@ select, option, input {
 a, .link {
 	text-decoration: none;
 	color: #0066cc;
+	cursor: pointer;
 
 	&:hover {
 		border-bottom

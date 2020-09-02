@@ -9,7 +9,7 @@ const initialState = {
     rows: {},
     sortedRows: [],
     builderTab: 0,
-    format: "html",
+    format: "html", // "html", "text", "rtf"
     textIndentNumSpaces: 4,
     htmlIndentWidth: 50,
     rowClassPrefix: "cg-col-"

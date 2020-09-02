@@ -1,5 +1,7 @@
 import * as squirrelly from 'squirrelly';
+import Parser from 'html-tokenizer/parser';
 
+// helper method to parse the CSV data (in JSON format) and return an array of rows to be output
 export const getBuilderLines = (data, rowConfig, generationFormat) => {
     const lastSeenColValues = [];
     const lines = [];
@@ -52,6 +54,40 @@ export const getFormattedCell = (format, placeholders, generationFormat) => {
     return value;
 };
 
+export const convertKnownHtmlCharsToRtf = (content) => {
+    const data = Parser.parse(content);
+
+    let rtfStr = '';
+    for (const token of data) {
+        if (token.type === 'open') {
+            if (token.name === 'b') {
+                rtfStr += '{\\b ';
+            }
+            if (token.name === 'i') {
+                rtfStr += '{\\i ';
+            }
+            if (token.name === 'u') {
+                rtfStr += '{\\ul ';
+            }
+            if (token.name === 'br') {
+                rtfStr += '\\line';
+            }
+        }
+
+        if (token.type === 'close') {
+            if (token.name === 'i' || token.name === 'b' || token.name === 'u') {
+                rtfStr += '}';
+            }
+        }
+
+        if (token.type === 'text') {
+            rtfStr += token.text;
+        }
+    }
+
+    return rtfStr;
+};
+
 export const getBuilderContent = (data, rowData, format, textIndentNumSpaces, htmlIndentWidth, rowClassPrefix, isPreview = true) => {
     const lines = getBuilderLines(data, rowData, format);
     let content = '';
@@ -63,22 +99,30 @@ export const getBuilderContent = (data, rowData, format, textIndentNumSpaces, ht
     // generation we generate the final markup with the appropriate CSS separately
     if (isPreview) {
         lines.forEach(({ value, indent}) => {
-            if (format === "html") {
+            if (format === "html" || format === "rtf") {
                 const pxWidth = (indent-1) * htmlIndent;
                 content += `<div style="padding-left: ${pxWidth}px">${value}</div>`;
             } else {
                 content += ' '.repeat((indent-1)*textSpaces) + value + '\n';
             }
         });
+
     } else {
         lines.forEach(({ value, colIndex, indent }) => {
             if (format === "html") {
-                const cls = `${rowClassPrefix}${colIndex+1} ${rowClassPrefix}indent-${indent}`;
+                const cls = `${rowClassPrefix}${colIndex + 1} ${rowClassPrefix}indent-${indent}`;
                 content += `<div class="${cls}">${value}</div>\n`;
+            } else if (format === "rtf") {
+                content += '{\\pard ' + (' '.repeat((indent-1)*textSpaces) + convertKnownHtmlCharsToRtf(value)) + ' \\par}\n';
             } else {
                 content += ' '.repeat((indent-1)*textSpaces) + value + '\n';
             }
         });
+
+        if (format === "rtf") {
+            // content = `{\\pard\n${content}\\par}\n`;
+            content = `{\\rtf1\\ansi\\deff0\\fs24\n${content}\n}\n`;
+        }
     }
 
     return content;

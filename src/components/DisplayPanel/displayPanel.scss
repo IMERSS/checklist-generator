@@ -11,7 +11,7 @@
         font-size: inherit;
     }
 
-    &.textFormat {
+    &.textFormat, &.rtfFormat {
         white-space: pre-wrap;
     }
 }

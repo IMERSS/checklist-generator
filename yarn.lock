@@ -5359,6 +5359,11 @@ html-minifier-terser@^5.0.1:
     relateurl "^0.2.7"
     terser "^4.6.3"
 
+html-tokenizer@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/html-tokenizer/-/html-tokenizer-3.0.0.tgz#2bc6eff2b7cc21218d3828497e0b18d4af723165"
+  integrity sha512-U2f+YTRiRUf6LijNcHOJADLAq1atFGFYPtLZm+IMyx27bvLMxZNx8Ij3wMf4cJzhF8dlQWASvYQKSkKO3276wg==
+
 html-webpack-plugin@4.0.0-beta.11:
   version "4.0.0-beta.11"
   resolved "https://registry.yarnpkg.com/html-webpack-plugin/-/html-webpack-plugin-4.0.0-beta.11.tgz#3059a69144b5aecef97708196ca32f9e68677715"

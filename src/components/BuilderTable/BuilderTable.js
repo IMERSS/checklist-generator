@@ -1,11 +1,23 @@
 import React from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
+import SettingsIcon from '@material-ui/icons/Settings';
 import ColumnDropdown from '../ColumnDropdown/ColumnDropdown.container';
 import DisplayPanel from '../DisplayPanel/DisplayPanel.container';
 import "./BuilderTable.scss";
 
-export const BuilderTable = ({ rows, onAddRow, onDeleteRow, onSelectColumn, onToggleRowIndentation, onUpdateRowFormat }) => {
+export const BuilderTable = ({ format, rows, onAddRow, onDeleteRow, onSelectColumn, onToggleRowIndentation,
+    onUpdateRowFormat, showRowSettingsModal }) => {
     let rowElements = <p>Click the Add Row link below to start building your checklist.</p>;
+
+    const getSettingsCol = (rowId) => {
+        if (format === 'rtf') {
+            return (
+                <div className="rowSettings" onClick={() => showRowSettingsModal(rowId)}>
+                    <SettingsIcon style={{ fontSize: 20 }} />
+                </div>
+            );
+        }
+    };
 
     if (rows.length) {
         rowElements = rows.map(({ rowId, colIndex, format, indent }, rowIndex) => (
@@ -23,6 +35,7 @@ export const BuilderTable = ({ rows, onAddRow, onDeleteRow, onSelectColumn, onTo
                 <div className="formatCol">
                     <input type="text" value={format} onChange={(e) => onUpdateRowFormat(rowId, e.target.value)}/>
                 </div>
+                {getSettingsCol(rowId)}
                 <div className="deleteRow" onClick={() => onDeleteRow(rowId)}>
                     <DeleteIcon style={{ fontSize: 20 }} />
                 </div>

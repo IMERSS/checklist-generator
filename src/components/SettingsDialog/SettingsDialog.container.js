@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import * as actions from '../../store/settings/settings.actions';
 import * as selectors from '../../store/settings/settings.selectors';
-import { BuilderTable } from './BuilderTable';
+import { BuilderTable } from '../BuilderTable/BuilderTable';
 
 const mapStateToProps = (state) => ({
     rows: selectors.getRowData(state),

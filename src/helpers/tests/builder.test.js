@@ -1,4 +1,4 @@
-import { getBuilderLines } from '../builder';
+import { getBuilderLines, convertKnownHtmlCharsToRtf } from '../builder';
 
 describe('getBuilderLines', () => {
 
@@ -25,5 +25,14 @@ describe('getBuilderLines', () => {
                 { value: "Fifth", indent: 2 }
             ]
         );
+    });
+});
+
+
+describe("convertKnownHtmlCharsToRtf", () => {
+    it("converts bold tags", () => {
+        expect(convertKnownHtmlCharsToRtf('this is a <b>test</b> okay?')).toEqual('this is a {\\b test} okay?');
+        expect(convertKnownHtmlCharsToRtf('this is a <b>test</b> <b>ok</b>ay?')).toEqual('this is a {\\b test} {\\b ok}ay?');
+        expect(convertKnownHtmlCharsToRtf('<b>simple</b>')).toEqual('{\\b simple}');
     });
 });

@@ -3,8 +3,12 @@ import "./displayPanel.scss";
 
 const DisplayPanel = ({ format, content }) => {
     let output = '';
-    if (format === "html") {
-        output = <div className="displayPanel" dangerouslySetInnerHTML={{ __html: content }} />;
+    if (format === 'html' || format === 'rtf') {
+        let classes = 'displayPanel';
+        if (format === 'rtf') {
+            classes += ' rtfFormat';
+        }
+        output = <div className={classes} dangerouslySetInnerHTML={{ __html: content }} />;
     } else {
         output = <div className="displayPanel textFormat">{content}</div>;
     }
