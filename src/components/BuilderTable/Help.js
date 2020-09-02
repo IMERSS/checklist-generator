@@ -25,6 +25,21 @@ const Help = () => (
                 language works. Welcome to programming!
             </li>
         </ul>
+
+        <h2>Display Panel</h2>
+
+        <p>
+            The purpose of the display panel is to give you an idea of what you're generating. But to emphasize: it's
+            <i>merely an approximation</i> of what you're generating. HTML will look different in whatever site you
+            use it, and RTF content will look different because it's being used in rich text editors
+        </p>
+        <p>
+            The <b>Auto-update display panel</b> option is checked by default. Any time you add rows, edit them or
+            change the default settings, the panel will automatically refresh. But you may find this is rather slow
+            depending on the size of your data set and whatever settings you provide. As such, you have the option of
+            disabling it and just manually updating it. Note: the <b>RTF</b> format is very time consuming to regenerate,
+            so the auto-update feature is unavailable.
+        </p>
     </>
 );
 

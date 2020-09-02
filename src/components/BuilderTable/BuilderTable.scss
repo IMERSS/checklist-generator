@@ -15,7 +15,7 @@
 
     div {
         flex: 1;
-        padding: 3px;
+        padding: 4px 2px 1px;
     }
 
     .colDropdown {
@@ -77,4 +77,9 @@
 
 .tip {
     color: #999999;
+}
+
+.errorField, .errorField:focus {
+    border: 1px solid #cc0000;
+    outline: none;
 }

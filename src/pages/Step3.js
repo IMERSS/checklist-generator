@@ -7,10 +7,13 @@ import Settings from "../components/BuilderTable/Settings.container";
 import Help from "../components/BuilderTable/Help";
 import TabPanel from "../components/TabPanel";
 import ApplySettingsDialog from "../components/ApplySettingsDialog/ApplySettingsDialog.container";
+import './Page3.scss';
 
 
-export const Step3 = ({ onPrev, onNext, builderTab, setBuilderTab }) => (
+export const Step3 = ({ onPrev, onNext, builderTab, formatLabel, setBuilderTab }) => (
     <>
+        <h1 className="builderStepTitle">{formatLabel} checklist</h1>
+
         <Tabs
             value={builderTab}
             indicatorColor="primary"
@@ -23,7 +26,6 @@ export const Step3 = ({ onPrev, onNext, builderTab, setBuilderTab }) => (
         </Tabs>
         <TabPanel value={builderTab} index={0}>
             <BuilderTable/>
-
             <footer>
                 <Button variant="outlined" size="small" color="secondary" onClick={onPrev}
                         style={{marginRight: 10, minWidth: 20}}>&laquo;</Button>

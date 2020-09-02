@@ -11,9 +11,26 @@ export const getFormat = (state) => state.settings.format;
 export const getTextIndentNumSpaces = (state) => state.settings.textIndentNumSpaces;
 export const getHtmlIndentWidth = (state) => state.settings.htmlIndentWidth;
 export const getRowClassPrefix = (state) => state.settings.rowClassPrefix;
+export const getRtfDefaultFontSize = (state) => state.settings.rtfDefaultFontSize;
+export const getRtfDefaultLineHeight = (state) => state.settings.rtfDefaultLineHeight;
 export const getSettingsError = (state) => state.settings.loadSettingsError;
+export const getEditingRowId = (state) => state.settings.editingRowId;
 export const isApplySettingsDialogOpen = (state) => state.settings.applySettingsDialogOpen;
+export const isRowSettingsDialogOpen = (state) => state.settings.rowSettingsDialogOpen;
+export const shouldAutoUpdate = (state) => state.settings.autoUpdate;
+export const getRegenerationCount = (state) => state.settings.regenerationCount;
 
+export const getFormatLabel = createSelector(
+    getFormat,
+    (format) => {
+        const map = {
+            html: 'HTML',
+            rtf: 'RTF',
+            text: 'Text'
+        };
+        return map[format];
+    }
+)
 export const getRowData = createSelector(
     getSortedRows,
     getRows,
@@ -42,15 +59,24 @@ export const getColumns = createSelector(
     }
 );
 
+let lastRegenerationCount;
+let lastBuilderContent;
 export const getPreviewContent = createSelector(
+    shouldAutoUpdate,
+    getRegenerationCount,
     getData,
     getRowData,
     getFormat,
     getTextIndentNumSpaces,
     getHtmlIndentWidth,
-    (data, rowData, format, textIndentNumSpaces, htmlIndentWidth) => (
-        getBuilderContent(data, rowData, format, textIndentNumSpaces, htmlIndentWidth)
-    )
+    (autoUpdate, regenerationCount, data, rowData, format, textIndentNumSpaces, htmlIndentWidth) => {
+        if (!autoUpdate && regenerationCount === lastRegenerationCount && lastBuilderContent) {
+            return lastBuilderContent;
+        }
+        lastRegenerationCount = regenerationCount;
+        lastBuilderContent = getBuilderContent(true, data, rowData, format, textIndentNumSpaces, htmlIndentWidth);
+        return lastBuilderContent;
+    }
 );
 
 export const getGeneratedContent = createSelector(
@@ -60,8 +86,11 @@ export const getGeneratedContent = createSelector(
     getTextIndentNumSpaces,
     getHtmlIndentWidth,
     getRowClassPrefix,
-    (data, rowData, format, textIndentNumSpaces, htmlIndentWidth, rowClassPrefix) => (
-        getBuilderContent(data, rowData, format, textIndentNumSpaces, htmlIndentWidth, rowClassPrefix, false)
+    getRtfDefaultFontSize,
+    getRtfDefaultLineHeight,
+    (data, rowData, format, textIndentNumSpaces, htmlIndentWidth, rowClassPrefix, rtfDefaultFontSize, rtfDefaultLineHeight) => (
+        getBuilderContent(false, data, rowData, format, textIndentNumSpaces, htmlIndentWidth, rowClassPrefix,
+            rtfDefaultFontSize, rtfDefaultLineHeight)
     )
 );
 
@@ -104,5 +133,28 @@ export const getSettingsStr = createSelector(
         });
 
         return JSON.stringify(settings, null, '\t');
+    }
+);
+
+export const getRowSettings = createSelector(
+    getEditingRowId,
+    getRows,
+    (editingRowId, rows) => {
+        if (!editingRowId) {
+            return {};
+        }
+        return rows[editingRowId].settings;
+    }
+);
+
+export const getSelectedRowColumn = createSelector(
+    getEditingRowId,
+    getRows,
+    getColumns,
+    (editingRowId, rows, columns) => {
+        if (!editingRowId) {
+            return '';
+        }
+        return columns[rows[editingRowId].colIndex];
     }
 );

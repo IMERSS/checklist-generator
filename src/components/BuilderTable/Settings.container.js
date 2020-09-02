@@ -7,14 +7,13 @@ const mapStateToProps = (state) => ({
     format: selectors.getFormat(state),
     textIndentNumSpaces: selectors.getTextIndentNumSpaces(state),
     htmlIndentWidth: selectors.getHtmlIndentWidth(state),
-    rowClassPrefix: selectors.getRowClassPrefix(state)
+    rowClassPrefix: selectors.getRowClassPrefix(state),
+    rtfDefaultFontSize: selectors.getRtfDefaultFontSize(state),
+    rtfDefaultLineHeight: selectors.getRtfDefaultLineHeight(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    onChangeFormat: (format) => dispatch(actions.updateFormat(format)),
-    onChangeHtmlIndentWidth: (width) => dispatch(actions.updateHtmlIndentWidth(width)),
-    onChangeRowClassPrefix: (prefix) => dispatch(actions.updateRowClassPrefix(prefix)),
-    onChangeTextIndentNumSpaces: (numSpaces) => dispatch(actions.updateTextIndentNumSpaces(numSpaces))
+    onChangeSetting: (settingName, value) => dispatch(actions.updateSetting(settingName, value))
 });
 
 const container = connect(

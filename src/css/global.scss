@@ -1,14 +1,17 @@
 body {
 	line-height: 22px;
-	padding: 0 0 20px 0;
+	padding: 0 0 30px 0;
 	margin: 0;
-	font-family: "Open Sans", sans-serif;
+	font-family: "Lato", sans-serif;
 }
 
 .appBar {
 	div, .MuiIconButton-label {
 		color: white;
 	}
+}
+b {
+	font-weight: 800;
 }
 
 .app {
@@ -26,7 +29,7 @@ div, span, select, option, p, body, label, input {
 
 select, option, input {
 	font-size: 12px;
-	font-family: "Open Sans", sans-serif;
+	font-family: "Lato", sans-serif;
 }
 
 a, .link {
@@ -43,4 +46,18 @@ a, .link {
 .buttonDivider {
 	margin: 0 20px;
 	color: #dddddd;
+}
+
+input {
+	outline:none;
+	border: 1px solid #cccccc;
+	padding: 2px;
+	&:focus {
+		border: 1px solid #3399cc;
+	}
+}
+
+.headingIcon {
+	color: #a8b1e0;
+	margin: 4px 6px 4px 0;
 }

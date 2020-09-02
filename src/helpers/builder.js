@@ -6,10 +6,12 @@ export const getBuilderLines = (data, rowConfig, generationFormat) => {
     const lastSeenColValues = [];
     const lines = [];
 
+    const rowPlaceholders = getDocumentRowPlaceholders();
+
     for (let row=1; row<data.length; row++) {
         let currIndent = 0;
         rowConfig.forEach((config) => {
-            const { colIndex, format, indent } = config; // format
+            const { colIndex, format, errors, indent, settings } = config;
             const colValue = data[row][colIndex];
 
             currIndent = (indent) ? currIndent + 1 : currIndent;
@@ -19,12 +21,17 @@ export const getBuilderLines = (data, rowConfig, generationFormat) => {
                 return;
             }
 
-            const placeholders = getRowPlaceholders(data[row]);
+            const placeholders = rowPlaceholders[row];
+            const hasErrors = errors && errors.length > 0;
 
             lines.push({
                 colIndex,
-                value: getFormattedCell(format, { VALUE: colValue, ...placeholders }, generationFormat),
-                indent: currIndent
+                value: getFormattedCell(format, hasErrors, { VALUE: colValue, ...placeholders }, generationFormat),
+                indent: currIndent,
+
+                // pity... these aren't line-specific. But convenient.
+                rtfFontSize: settings && settings.rtfFontSize && !settings.rtfFontSizeUseDefault ? settings.rtfFontSize : null,
+                rtfLineHeight: settings && settings.rtfLineHeight ? settings.rtfLineHeight : null
             });
 
             lastSeenColValues[colIndex] = colValue;
@@ -43,9 +50,29 @@ export const getRowPlaceholders = (row) => {
     return placeholders;
 };
 
-export const getFormattedCell = (format, placeholders, generationFormat) => {
+let documentRowPlaceholders = [];
+export const computeDocumentRowPlaceholders = (rows) => {
+    const result = [];
+    rows.forEach((row) => {
+        const placeholders = {};
+        row.forEach((i, index) => {
+            placeholders['COL' + (index+1)] = i;
+        });
+        result.push(placeholders);
+    });
+    documentRowPlaceholders = result;
+};
+
+export const getDocumentRowPlaceholders = () => documentRowPlaceholders;
+
+export const getFormattedCell = (format, hasError, placeholders, generationFormat) => {
     let errorStr = 'invalid syntax for this row';
-    let value = generationFormat === 'html' ? `<span class="invalidRow">${errorStr}</span>` : `--- ${errorStr} ---`;
+    let value = generationFormat === 'html' || generationFormat === 'rtf' ? `<span class="invalidRow">${errorStr}</span>` : `--- ${errorStr} ---`;
+
+    if (hasError) {
+        return value;
+    }
+
     try {
         value = squirrelly.render(format, placeholders);
     } catch (e) {
@@ -88,7 +115,8 @@ export const convertKnownHtmlCharsToRtf = (content) => {
     return rtfStr;
 };
 
-export const getBuilderContent = (data, rowData, format, textIndentNumSpaces, htmlIndentWidth, rowClassPrefix, isPreview = true) => {
+export const getBuilderContent = (isPreview, data, rowData, format, textIndentNumSpaces, htmlIndentWidth, rowClassPrefix,
+    rtfDefaultFontSize, rtfDefaultLineHeight) => {
     const lines = getBuilderLines(data, rowData, format);
     let content = '';
 
@@ -108,22 +136,43 @@ export const getBuilderContent = (data, rowData, format, textIndentNumSpaces, ht
         });
 
     } else {
-        lines.forEach(({ value, colIndex, indent }) => {
+        lines.forEach(({ value, colIndex, indent, rtfFontSize, rtfLineHeight }) => {
             if (format === "html") {
                 const cls = `${rowClassPrefix}${colIndex + 1} ${rowClassPrefix}indent-${indent}`;
                 content += `<div class="${cls}">${value}</div>\n`;
             } else if (format === "rtf") {
-                content += '{\\pard ' + (' '.repeat((indent-1)*textSpaces) + convertKnownHtmlCharsToRtf(value)) + ' \\par}\n';
+                const fontSize = (rtfFontSize) ? `\\fs${rtfFontSize*2}` : '';
+                const lineHeight = rtfLineHeight ? rtfLineHeight : rtfDefaultLineHeight;
+
+                content += `{\\pard${fontSize}\\sa${lineHeight} ` + (' '.repeat((indent-1)*textSpaces) + convertKnownHtmlCharsToRtf(value)) + ' \\par}\n';
             } else {
                 content += ' '.repeat((indent-1)*textSpaces) + value + '\n';
             }
         });
 
         if (format === "rtf") {
-            // content = `{\\pard\n${content}\\par}\n`;
-            content = `{\\rtf1\\ansi\\deff0\\fs24\n${content}\n}\n`;
+            // RTF font sizes are "half-points", so we double them
+            content = `{\\rtf1\\ansi\\deff0\\fs${rtfDefaultFontSize*2}\n${content}\n}\n`;
         }
     }
 
     return content;
+};
+
+
+export const validateRtfRow = (rowString) => {
+    const data = Parser.parse(rowString);
+
+    const invalidTags = [];
+    const validTags = ['b', 'i', 'u', 'br'];
+
+    for (const token of data) {
+        if (token.type === 'open') {
+            if (validTags.indexOf(token.name) === -1) {
+                invalidTags.push(token.name);
+            }
+        }
+    }
+
+    return invalidTags;
 };

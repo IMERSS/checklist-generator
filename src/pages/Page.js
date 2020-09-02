@@ -7,6 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import PlaylistAddCheckIcon from '@material-ui/icons/ListAltTwoTone';
 import { Stepper } from '../components/Stepper';
 import { Step1 } from './Step1';
 import Step2 from './Step2.container';
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
+        display: 'flex'
     },
 }));
 
@@ -85,6 +87,7 @@ const Page = ({ pageIndex, setPageIndex }) => {
                 <AppBar position="fixed" className="appBar">
                     <Toolbar>
                         <Typography variant="h6" className={classes.title}>
+                            <PlaylistAddCheckIcon className="headingIcon" />
                             Checklist Generator
                         </Typography>
                         <div>

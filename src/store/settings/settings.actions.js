@@ -1,10 +1,18 @@
+import { debounce } from 'throttle-debounce';
 import { showNotification } from '../../helpers/utils';
 import { parseCsv } from '../../helpers/csv';
+import { validateRtfRow, computeDocumentRowPlaceholders } from '../../helpers/builder';
+import { getFormat } from "./settings.selectors";
 
 export const SET_DATA = 'SET_DATA';
 export const uploadFile = (file) => (dispatch) => {
     parseCsv(file)
         .then((resp) => {
+
+            // takes up some memory but this computes all the row placeholders for use during generation, which
+            // saves a bunch of work when generating the visible result
+            computeDocumentRowPlaceholders(resp.data);
+
             dispatch({
                 type: SET_DATA,
                 payload: {
@@ -33,23 +41,42 @@ export const clearRows = () => ({ type: CLEAR_ROWS });
 export const TOGGLE_ROW_INDENTATION = 'TOGGLE_ROW_INDENTATION';
 export const toggleRowIndentation = (rowId) => ({ type: TOGGLE_ROW_INDENTATION, payload: { rowId }});
 
+export const UPDATE_ROW_FORMAT_ERROR = 'UPDATE_ROW_FORMAT_ERROR';
+export const updateRowFormatError = debounce(100, (dispatch, rowId, format, generationFormat) => {
+    // right now we only validate RTF format
+    if (generationFormat !== 'rtf') {
+        return;
+    }
+
+    const errors = validateRtfRow(format);
+
+    dispatch({
+        type: UPDATE_ROW_FORMAT_ERROR,
+        payload: {
+            rowId,
+            errors
+        }
+    });
+
+});
+
 export const UPDATE_ROW_FORMAT = 'UPDATE_ROW_FORMAT';
-export const updateRowFormat = (rowId, format) => ({ type: UPDATE_ROW_FORMAT, payload: { rowId, format }});
+export const updateRowFormat = (rowId, format) => (dispatch, getState) => {
+    const generationFormat = getFormat(getState());
+
+    updateRowFormatError(dispatch, rowId, format, generationFormat);
+
+    dispatch({
+        type: UPDATE_ROW_FORMAT,
+        payload: {
+            rowId,
+            format
+        }
+    });
+};
 
 export const SET_BUILDER_TAB = 'SET_BUILDER_TAB';
 export const setBuilderTab = (tab) => ({ type: SET_BUILDER_TAB, payload: { tab }});
-
-export const UPDATE_FORMAT = 'UPDATE_FORMAT';
-export const updateFormat = (format) => ({ type: UPDATE_FORMAT, payload: { format }});
-
-export const UPDATE_HTML_INDENT_WIDTH = 'UPDATE_HTML_INDENT_WIDTH';
-export const updateHtmlIndentWidth = (htmlIndentWidth) => ({ type: UPDATE_HTML_INDENT_WIDTH, payload: { htmlIndentWidth }});
-
-export const UPDATE_ROW_CLASS_PREFIX = 'UPDATE_ROW_CLASS_PREFIX';
-export const updateRowClassPrefix = (prefix) => ({ type: UPDATE_ROW_CLASS_PREFIX, payload: { prefix }});
-
-export const UPDATE_TEXT_INDENT_NUM_SPACES = 'UPDATE_TEXT_INDENT_NUM_SPACES';
-export const updateTextIndentNumSpaces = (numSpaces) => ({ type: UPDATE_TEXT_INDENT_NUM_SPACES, payload: { numSpaces }});
 
 export const RESET = 'RESET';
 export const onReset = () => ({ type: 'RESET' });
@@ -74,8 +101,7 @@ export const processSettings = (settingsStr) => (dispatch) => {
     try {
         const settings = JSON.parse(settingsStr);
 
-        // extract as much valid setting data as we can. TODO The validation is totally feeble here... it'd be much better to
-        // define a schema for the settings and validate against that
+        // TODO The validation is totally feeble here. Better to define a schema for the settings and validate against that
 
         if (settings.rows && Array.isArray(settings.rows)) {
             dispatch(clearRows());
@@ -95,16 +121,16 @@ export const processSettings = (settingsStr) => (dispatch) => {
         }
 
         if (settings.format && ['html', 'rtf', 'text'].indexOf(settings.format) !== -1) {
-            dispatch(updateFormat(settings.format));
+            dispatch(updateSetting('format', settings.format));
         }
         if (settings.textIndentNumSpaces) {
-            dispatch(updateTextIndentNumSpaces(settings.textIndentNumSpaces));
+            dispatch(updateSetting('textIndentNumSpaces', settings.textIndentNumSpaces));
         }
         if (settings.htmlIndentWidth) {
-            dispatch(updateHtmlIndentWidth(settings.htmlIndentWidth));
+            dispatch(updateSetting('htmlIndentWidth', settings.htmlIndentWidth));
         }
         if (settings.rowClassPrefix) {
-            dispatch(updateRowClassPrefix(settings.rowClassPrefix));
+            dispatch(updateSetting('rowClassPrefix', settings.rowClassPrefix));
         }
 
         dispatch(closeApplySettingsDialog());
@@ -121,3 +147,27 @@ export const openApplySettingsDialog = () => ({ type: OPEN_APPLY_SETTINGS_DIALOG
 
 export const CLOSE_APPLY_SETTINGS_DIALOG = 'CLOSE_APPLY_SETTINGS_DIALOG';
 export const closeApplySettingsDialog = () => ({ type: CLOSE_APPLY_SETTINGS_DIALOG });
+
+export const OPEN_ROW_SETTINGS_DIALOG = 'OPEN_ROW_SETTINGS_DIALOG';
+export const openRowSettingsDialog = (rowId) => ({ type: OPEN_ROW_SETTINGS_DIALOG, payload: { rowId } });
+
+export const CLOSE_ROW_SETTINGS_DIALOG = 'CLOSE_ROW_SETTINGS_DIALOG';
+export const closeRowSettingsDialog = () => ({ type: CLOSE_ROW_SETTINGS_DIALOG });
+
+export const UPDATE_ROW_SETTINGS = 'UPDATE_ROW_SETTINGS';
+export const updateRowSettings = (settings) => ({ type: UPDATE_ROW_SETTINGS, payload: { settings }});
+
+export const UPDATE_SETTING = 'UPDATE_SETTING';
+export const updateSetting = (setting, value) => ({
+    type: UPDATE_SETTING,
+    payload: {
+        setting, value
+    }
+});
+
+export const SET_AUTO_UPDATE = 'SET_AUTO_UPDATE';
+export const setAutoUpdate = (enabled) => ({ type: SET_AUTO_UPDATE, payload: { enabled }});
+
+
+export const MANUAL_UPDATE = 'MANUAL_UPDATE';
+export const manualUpdateDisplay = () => ({ type: MANUAL_UPDATE });

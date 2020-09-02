@@ -5,7 +5,8 @@ import { Step3 } from './Step3';
 
 const mapStateToProps = (state) => ({
     hasUploadedData: selectors.hasUploadedData(state),
-    builderTab: selectors.getBuilderTab(state)
+    builderTab: selectors.getBuilderTab(state),
+    formatLabel: selectors.getFormatLabel(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

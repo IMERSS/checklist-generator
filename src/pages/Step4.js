@@ -67,8 +67,8 @@ ${generatedContent}
         if (format === 'rtf') {
             rtfStr = (
                 <>
-                    Since this is <b>RTF</b> format, you'll need to copy it to your clipboard and create a new file <u>in
-                    plain text format</u>, and then give it an <b>.rtf</b> extension. Then shut the application down
+                    Since this is <b>RTF</b> format, you'll need to copy it to your clipboard and create a new file in <u>plain
+                    text format</u>, and then give it an <b>.rtf</b> extension. Then shut the application down
                     and re-open it to see the formatting styles applied.
                 </>
             );
