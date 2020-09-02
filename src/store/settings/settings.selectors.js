@@ -78,3 +78,29 @@ export const getGeneratedCss = createSelector(
         return lines.join("\n");
     }
 );
+
+// serializes all the relevant user settings into a simple JSON object for the user to save. This lets them
+// re-create the same settings later on rather than rely on local storage to remember it for them. When adding node
+// support this'll help as well.
+export const getSettingsStr = createSelector(
+    getSortedRows,
+    getRows,
+    getFormat,
+    getTextIndentNumSpaces,
+    getHtmlIndentWidth,
+    getRowClassPrefix,
+    (sortedRows, rows, format, textIndentNumSpaces, htmlIndentWidth, rowClassPrefix) => {
+        const settings = {
+            rows: [],
+            format,
+            textIndentNumSpaces,
+            htmlIndentWidth,
+            rowClassPrefix
+        };
+        sortedRows.forEach((rowId) => {
+            settings.rows.push(rows[rowId]);
+        });
+
+        return JSON.stringify(settings, null, '\t');
+    }
+);

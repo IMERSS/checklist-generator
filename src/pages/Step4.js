@@ -1,15 +1,15 @@
 import React from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Button from "@material-ui/core/Button";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import FileCopy from "@material-ui/icons/FileCopy";
 import TabPanel from "../components/TabPanel";
 import CopyToClipboardBtn from "../components/CopyToClipboard/CopyToClipboardBtn";
+import SettingsDialog from "../components/SettingsDialog/SettingsDialog.container";
 import "./Page4.scss";
 
 export const Step4 = ({ onPrev, onReturn, format, generatedContent, generatedCss }) => {
     const [tab, setTab] = React.useState(0);
+    const [settingsDialogOpen, setSettingsDialogVisibility] = React.useState(false);
 
     const getContent = () => {
         if (format === "html") {
@@ -43,20 +43,19 @@ ${generatedContent}
                     <TabPanel value={tab} index={0}>
                         <div className="generatePanel">{generatedContent}</div>
                         <div style={{ float: 'right' }}>
-
-                            <CopyToClipboardBtn text={generatedContent} />
+                            <CopyToClipboardBtn content={generatedContent} />
                         </div>
                     </TabPanel>
                     <TabPanel value={tab} index={1}>
                         <div className="generatePanel">{generatedCss}</div>
                         <div style={{ float: 'right' }}>
-                            <CopyToClipboardBtn text={generatedCss} />
+                            <CopyToClipboardBtn content={generatedCss} />
                         </div>
                     </TabPanel>
                     <TabPanel value={tab} index={2}>
                         <div className="generatePanel">{fullPageContent}</div>
                         <div style={{ float: 'right' }}>
-                            <CopyToClipboardBtn text={fullPageContent} />
+                            <CopyToClipboardBtn content={fullPageContent} />
                         </div>
                     </TabPanel>
 
@@ -83,9 +82,7 @@ ${generatedContent}
 
                 <div className="generatePanel">{generatedContent}</div>
                 <div style={{ float: 'right' }}>
-                    <CopyToClipboard text={generatedContent}>
-                        <Button variant="contained" disableElevation size="small" color="primary" startIcon={<FileCopy />}>Copy to clipboard</Button>
-                    </CopyToClipboard>
+                    <CopyToClipboardBtn content={generatedContent} />
                 </div>
             </>
         );
@@ -97,6 +94,11 @@ ${generatedContent}
 
             {getContent()}
 
+            <SettingsDialog
+                open={settingsDialogOpen}
+                onClose={() => setSettingsDialogVisibility(false)}
+            />
+
             <br />
             <footer>
                 <Button variant="outlined" size="small" color="secondary" onClick={onPrev}
@@ -104,7 +106,7 @@ ${generatedContent}
                 <Button variant="outlined" size="small" color="primary" onClick={onReturn}>Start again</Button>
                 <span style={{ margin: "0 20px" }}>|</span>
 
-                <Button variant="outlined" size="small" color="default" onClick={onReturn}>Save Build Settings</Button>
+                <Button variant="outlined" size="small" color="default" onClick={() => setSettingsDialogVisibility(true)}>Save Settings</Button>
             </footer>
         </>
     );
