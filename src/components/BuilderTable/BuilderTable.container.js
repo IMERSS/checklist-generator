@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch) => ({
     onSelectColumn: (rowId, colIndex) => dispatch(actions.selectColumn(rowId, colIndex)),
     onToggleRowIndentation: (rowId) => dispatch(actions.toggleRowIndentation(rowId)),
     onUpdateRowFormat: (rowId, rowFormat) => dispatch(actions.updateRowFormat(rowId, rowFormat)),
-    showRowSettingsModal: () => {}
+    showRowSettingsDialog: () => {}
 });
 
 const container = connect(

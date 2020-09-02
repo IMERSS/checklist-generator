@@ -4,15 +4,16 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import ColumnDropdown from '../ColumnDropdown/ColumnDropdown.container';
 import DisplayPanel from '../DisplayPanel/DisplayPanel.container';
 import "./BuilderTable.scss";
+import RowSettingsDialog from "../RowSettingsDialog/RowSettingsDialog.container";
 
 export const BuilderTable = ({ format, rows, onAddRow, onDeleteRow, onSelectColumn, onToggleRowIndentation,
-    onUpdateRowFormat, showRowSettingsModal }) => {
+    onUpdateRowFormat, showRowSettingsDialog }) => {
     let rowElements = <p>Click the Add Row link below to start building your checklist.</p>;
 
     const getSettingsCol = (rowId) => {
         if (format === 'rtf') {
             return (
-                <div className="rowSettings" onClick={() => showRowSettingsModal(rowId)}>
+                <div className="rowSettings" onClick={() => showRowSettingsDialog(rowId)}>
                     <SettingsIcon style={{ fontSize: 20 }} />
                 </div>
             );
@@ -51,6 +52,7 @@ export const BuilderTable = ({ format, rows, onAddRow, onDeleteRow, onSelectColu
             <span className="link" onClick={(e) => { e.preventDefault(); onAddRow(); }}>Add Row &raquo;</span>
 
             <DisplayPanel />
+            <RowSettingsDialog />
         </>
     );
 };

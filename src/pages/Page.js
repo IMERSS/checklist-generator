@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const steps = [
-    'Intro',
+    'Start',
     'Upload file',
     'Build checklist',
     'Generate'
