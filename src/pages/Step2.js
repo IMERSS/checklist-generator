@@ -11,14 +11,15 @@ export const Step2 = ({ onPrev, onNext, uploadedFilename, hasUploadedData, onUpl
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
     const getButtons = () => {
-        if (!hasUploadedData) {
-            return null;
+        let continueButton = null;
+        if (hasUploadedData) {
+            continueButton = <Button variant="outlined" size="small" color="primary" onClick={onNext}>Continue &raquo;</Button>;
         }
 
         return (
             <footer>
                 <Button variant="outlined" size="small" color="secondary" onClick={onPrev} style={{ marginRight: 10, minWidth: 20 }}>&laquo;</Button>
-                <Button variant="outlined" size="small" color="primary" onClick={onNext}>Continue &raquo;</Button>
+                {continueButton}
             </footer>
         );
     }
