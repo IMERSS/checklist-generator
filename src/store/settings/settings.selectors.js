@@ -75,6 +75,7 @@ export const getPreviewContent = createSelector(
         }
         lastRegenerationCount = regenerationCount;
         lastBuilderContent = getBuilderContent(true, data, rowData, format, textIndentNumSpaces, htmlIndentWidth);
+
         return lastBuilderContent;
     }
 );
