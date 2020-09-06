@@ -4,6 +4,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import TabPanel from "../components/TabPanel";
 import CopyToClipboardBtn from "../components/CopyToClipboard/CopyToClipboardBtn";
+import DownloadContentBtn from "../components/DownloadContentBtn/DownloadContentBtn";
 import SettingsDialog from "../components/SettingsDialog/SettingsDialog.container";
 import "./Page4.scss";
 
@@ -82,6 +83,7 @@ ${generatedContent}
 
                 <div className="generatePanel">{generatedContent}</div>
                 <div style={{ float: 'right' }}>
+	                <DownloadContentBtn content={generatedContent} style={{ marginRight: 10 }}/>
                     <CopyToClipboardBtn content={generatedContent} />
                 </div>
             </>

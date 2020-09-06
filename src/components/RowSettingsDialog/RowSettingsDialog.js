@@ -10,8 +10,6 @@ import Dialog from '@material-ui/core/Dialog';
 // the content instead of having to provide inline styles
 const RowSettingsDialog = ({ selectedColumn, onClose, open, rowSettings, updateRowSettings }) => {
     const settings = {
-        rtfFontSizeUseDefault: true,
-        rtfFontSize: '',
         rtfLineHeightUseDefault: true,
         rtfLineHeight: '',
         ...rowSettings
@@ -42,31 +40,6 @@ const RowSettingsDialog = ({ selectedColumn, onClose, open, rowSettings, updateR
                 <div className="builderSettings">
                     <div>
                         <div className="settingsCol1">
-                            Font size
-                        </div>
-                        <div>
-                            <input
-                                type="radio"
-                                id="fontSizeDefault"
-                                checked={settings.rtfFontSizeUseDefault}
-                                onChange={() => updateSettings('rtfFontSizeUseDefault', true)} />
-                            <label htmlFor="fontSizeDefault">Default</label>
-                            <input
-                                type="radio"
-                                id="fontSizeCustom"
-                                checked={!settings.rtfFontSizeUseDefault}
-                                onChange={() => updateSettings('rtfFontSizeUseDefault', false)} />
-                            <label htmlFor="fontSizeCustom">Custom: </label>
-                            <input
-                                type="number"
-                                value={settings.rtfFontSize}
-                                style={{ width: 40 }}
-                                disabled={settings.rtfFontSizeUseDefault}
-                                onChange={(e) => updateSettings('rtfFontSize', e.target.value)} /> pt
-                        </div>
-                    </div>
-                    <div>
-                        <div className="settingsCol1">
                             Line height
                         </div>
                         <div>
@@ -94,8 +67,10 @@ const RowSettingsDialog = ({ selectedColumn, onClose, open, rowSettings, updateR
                 <h3>Arbitrary regex</h3>
 
                 <p>
-                    This section is super technical, apologies. What this lets you do is run arbitrary rules on the
-                    placeholders used in this row, to make whatever conversions you want.
+                    This section lets you define arbitrary rules to be applied on the placeholders used in this row, to
+	                make whatever conversions you want. Basically they let you alter the content of your CSV cells
+	                rather than just output them as-is. Note that these run <i>prior</i> to the HTML parsing step, so
+	                you can add in <b>b</b>, <b>i</b> and other compatible tags (see help tab in parent page).
                 </p>
 
             </DialogContent>

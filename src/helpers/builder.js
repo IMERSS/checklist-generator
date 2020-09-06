@@ -29,8 +29,7 @@ export const getBuilderLines = (data, rowConfig, generationFormat) => {
                 value: getFormattedCell(format, hasErrors, { VALUE: colValue, ...placeholders }, generationFormat),
                 indent: currIndent,
 
-                // pity... these aren't line-specific. But convenient.
-                rtfFontSize: settings && settings.rtfFontSize && !settings.rtfFontSizeUseDefault ? settings.rtfFontSize : null,
+                // pity... this isn't line-specific. But convenient.
                 rtfLineHeight: settings && settings.rtfLineHeight ? settings.rtfLineHeight : null
             });
 
@@ -85,6 +84,7 @@ export const convertKnownHtmlCharsToRtf = (content) => {
     const data = Parser.parse(content);
 
     let rtfStr = '';
+    let openFontTags = false;
     for (const token of data) {
         if (token.type === 'open') {
             if (token.name === 'b') {
@@ -99,11 +99,23 @@ export const convertKnownHtmlCharsToRtf = (content) => {
             if (token.name === 'br') {
                 rtfStr += '\\line';
             }
+
+	        if (token.name === 'font') {
+	        	console.log(token);
+	        	if (token.attributes && token.attributes.size) {
+			        rtfStr += `{\\fs${parseInt(token.attributes.size.trim(), 10)*2}`;
+			        openFontTags++;
+		        }
+	        }
         }
 
         if (token.type === 'close') {
             if (token.name === 'i' || token.name === 'b' || token.name === 'u') {
                 rtfStr += '}';
+            }
+            if (token.name === 'font' && openFontTags > 0) {
+            	rtfStr += '}';
+            	openFontTags--;
             }
         }
 
@@ -136,15 +148,14 @@ export const getBuilderContent = (isPreview, data, rowData, format, textIndentNu
         });
 
     } else {
-        lines.forEach(({ value, colIndex, indent, rtfFontSize, rtfLineHeight }) => {
+        lines.forEach(({ value, colIndex, indent, rtfLineHeight }) => {
             if (format === "html") {
                 const cls = `${rowClassPrefix}${colIndex + 1} ${rowClassPrefix}indent-${indent}`;
                 content += `<div class="${cls}">${value}</div>\n`;
             } else if (format === "rtf") {
-                const fontSize = (rtfFontSize) ? `\\fs${rtfFontSize*2}` : '';
                 const lineHeight = rtfLineHeight ? rtfLineHeight : rtfDefaultLineHeight;
 
-                content += `{\\pard${fontSize}\\sa${lineHeight} ` + (' '.repeat((indent-1)*textSpaces) + convertKnownHtmlCharsToRtf(value)) + ' \\par}\n';
+                content += `{\\pard\\sa${lineHeight} ` + (' '.repeat((indent-1)*textSpaces) + convertKnownHtmlCharsToRtf(value)) + ' \\par}\n';
             } else {
                 content += ' '.repeat((indent-1)*textSpaces) + value + '\n';
             }
@@ -164,7 +175,7 @@ export const validateRtfRow = (rowString) => {
     const data = Parser.parse(rowString);
 
     const invalidTags = [];
-    const validTags = ['b', 'i', 'u', 'br'];
+    const validTags = ['b', 'i', 'u', 'br', 'font'];
 
     for (const token of data) {
         if (token.type === 'open') {
@@ -176,3 +187,20 @@ export const validateRtfRow = (rowString) => {
 
     return invalidTags;
 };
+
+
+// creates a file and prompts for download
+export const downloadFile = (data, filename, type) => {
+	let file = new Blob([data], { type: type });
+	const a = document.createElement('a');
+	const url = URL.createObjectURL(file);
+	a.href = url;
+	a.download = filename;
+	document.body.appendChild(a);
+	a.click();
+
+	setTimeout(function() {
+		document.body.removeChild(a);
+		window.URL.revokeObjectURL(url);
+	}, 0);
+}
