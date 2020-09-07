@@ -16,11 +16,20 @@ const DisplayPanel = ({ format, autoUpdate, setAutoUpdate, manualUpdateDisplay, 
         panel = <div className="displayPanel textFormat">{content}</div>;
     }
 
-    let autoUpdatePanelClasses = 'autoUpdatePanel';
-
+	let rtfWarning = '';
+    if (isRtf) {
+	    rtfWarning = (
+	    	<div className="rtfNote">
+			    Note: the display panel below is very limited for RTF since it's a very different medium than HTML. It'll
+			    only show bold, italic, underline and whatever info your add for each row. You'll need to actually check
+			    the generated content to see how your checklist looks.
+	    	</div>
+	    );
+    }
     return (
         <>
-            <div className={autoUpdatePanelClasses}>
+	        {rtfWarning}
+            <div className="autoUpdatePanel">
                 <span>
                     <input
                         type="checkbox"
@@ -34,6 +43,7 @@ const DisplayPanel = ({ format, autoUpdate, setAutoUpdate, manualUpdateDisplay, 
                     variant="contained"
                     disableElevation
                     size="small"
+                    disabled={autoUpdate}
                     onClick={() => manualUpdateDisplay()}>Update</Button>
             </div>
             {panel}

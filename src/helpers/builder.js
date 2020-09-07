@@ -124,17 +124,12 @@ export const convertKnownHtmlCharsToRtf = (content) => {
 export const applyArbitraryRegex = (str, regex) => {
 	let newStr = str;
 
-	// regex.forEach((row) => {
-	// 	if (row.regex) {
-	// 		const regex = new RegExp(row.regex);
-	//
-	// 		if (regex.test(newStr)) {
-	// 			console.log("match ", newStr, row.replacement);
-	// 		}
-	//
-	// 		newStr = newStr.replace(regex, row.replacement);
-	// 	}
-	// });
+	regex.forEach((row) => {
+		if (row.regex) {
+			const regex = new RegExp(row.regex);
+			newStr = newStr.replace(regex, row.replacement);
+		}
+	});
 
 	return newStr;
 };

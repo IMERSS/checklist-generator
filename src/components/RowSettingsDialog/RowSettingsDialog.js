@@ -104,7 +104,7 @@ const RowSettingsDialog = ({ selectedColumn, onClose, open, rtfDefaultLineHeight
 				            <select defaultValue={arbitraryRegex[0].example} onChange={(e) => updateArbRegex(0, 'example', e.target.value)}>
 					            <option value="">Please select</option>
 					            <option value="\bsp\.`<noStyle>sp.</noStyle>">Remove formatting from "sp." string</option>
-					            <option value="\bcf\.\\b`<noStyle>cf.</noStyle>">Remove formatting for "cf." (confer/conferatur) string</option>
+					            <option value="\bcf\.\s`<noStyle>cf. </noStyle>">Remove formatting for "cf." (confer/conferatur) string</option>
 				            </select>
 			            </div>
 			            <div className="col2">
@@ -119,8 +119,8 @@ const RowSettingsDialog = ({ selectedColumn, onClose, open, rtfDefaultLineHeight
 			            <div className="col1">
 				            <select defaultValue={arbitraryRegex[1].example} onChange={(e) => updateArbRegex(1, 'example', e.target.value)}>
 					            <option value="">Please select</option>
-					            <option value="/\bsp\.\b/`<noStyle>sp.<noStyle>">Remove formatting from "sp." string</option>
-					            <option value="/\bcf\.\b/`<noStyle>cf.<noStyle>">Remove formatting for "cf." (confer/conferatur) string</option>
+					            <option value="\bsp\.`<noStyle>sp.</noStyle>">Remove formatting from "sp." string</option>
+					            <option value="\bcf\.\s`<noStyle>cf. </noStyle>">Remove formatting for "cf." (confer/conferatur) string</option>
 				            </select>
 			            </div>
 			            <div className="col2">
@@ -135,8 +135,8 @@ const RowSettingsDialog = ({ selectedColumn, onClose, open, rtfDefaultLineHeight
 			            <div className="col1">
 				            <select defaultValue={arbitraryRegex[2].example} onChange={(e) => updateArbRegex(2, 'example', e.target.value)}>
 					            <option value="">Please select</option>
-					            <option value="/\bsp\.\b/`<noStyle>sp.<noStyle>">Remove formatting from "sp." string</option>
-					            <option value="/\bcf\.\b/`<noStyle>cf.<noStyle>">Remove formatting for "cf." (confer/conferatur) string</option>
+					            <option value="\bsp\.`<noStyle>sp.</noStyle>">Remove formatting from "sp." string</option>
+					            <option value="\bcf\.\s`<noStyle>cf. </noStyle>">Remove formatting for "cf." (confer/conferatur) string</option>
 				            </select>
 			            </div>
 			            <div className="col2">
@@ -151,8 +151,8 @@ const RowSettingsDialog = ({ selectedColumn, onClose, open, rtfDefaultLineHeight
 			            <div className="col1">
 				            <select defaultValue={arbitraryRegex[3].example} onChange={(e) => updateArbRegex(3, 'example', e.target.value)}>
 					            <option value="">Please select</option>
-					            <option value="/\bsp\.\b/`<noStyle>sp.<noStyle>">Remove formatting from "sp." string</option>
-					            <option value="/\bcf\.\b/`<noStyle>cf.<noStyle>">Remove formatting for "cf." (confer/conferatur) string</option>
+					            <option value="\bsp\.`<noStyle>sp.</noStyle>">Remove formatting from "sp." string</option>
+					            <option value="\bcf\.\s`<noStyle>cf. </noStyle>">Remove formatting for "cf." (confer/conferatur) string</option>
 				            </select>
 			            </div>
 			            <div className="col2">

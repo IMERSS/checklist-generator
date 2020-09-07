@@ -1,5 +1,7 @@
 .displayPanel {
-    margin-top: 10px;
+	clear: both;
+
+	margin-top: 10px;
     border: 2px dotted #cccccc;
     background-color: #fcfcff;
     padding: 20px;
@@ -19,6 +21,7 @@
 
 .autoUpdatePanel {
     float: right;
+	margin: 5px 0;
 
     label {
         margin-right: 8px;
@@ -29,4 +32,12 @@
             color: #999999;
         }
     }
+}
+
+.rtfNote {
+	margin-top: 5px;
+	color: #3b8045;
+	background-color: #e7f7e9;
+	padding: 15px;
+	clear: both;
 }
