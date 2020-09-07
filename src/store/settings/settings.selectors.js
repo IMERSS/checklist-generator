@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { getBuilderContent } from '../../helpers/builder';
 
+export const getAppStateVersion = (state) => state.settings.appStateVersion;
 export const getData = (state) => state.settings.data;
 export const getUploadedFilename = (state) => state.settings.uploadedFilename;
 export const getPageIndex = (state) => state.settings.pageIndex;
@@ -158,4 +159,15 @@ export const getSelectedRowColumn = createSelector(
         }
         return columns[rows[editingRowId].colIndex];
     }
+);
+
+export const getRowArbitraryRegex = createSelector(
+	getEditingRowId,
+	getRows,
+	(editingRowId, rows) => {
+		if (!editingRowId) {
+			return {};
+		}
+		return rows[editingRowId].arbitraryRegex;
+	}
 );

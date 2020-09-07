@@ -10,8 +10,8 @@ export const getBuilderLines = (data, rowConfig, generationFormat) => {
 
     for (let row=1; row<data.length; row++) {
         let currIndent = 0;
-        rowConfig.forEach((config) => {
-            const { colIndex, format, errors, indent, settings } = config;
+        rowConfig.forEach((config, uiRowIndex) => {
+            const { colIndex, format, errors, indent } = config;
             const colValue = data[row][colIndex];
 
             currIndent = (indent) ? currIndent + 1 : currIndent;
@@ -26,11 +26,9 @@ export const getBuilderLines = (data, rowConfig, generationFormat) => {
 
             lines.push({
                 colIndex,
-                value: getFormattedCell(format, hasErrors, { VALUE: colValue, ...placeholders }, generationFormat),
-                indent: currIndent,
-
-                // pity... this isn't line-specific. But convenient.
-                rtfLineHeight: settings && settings.rtfLineHeight ? settings.rtfLineHeight : null
+	            uiRowIndex,
+	            value: getFormattedCell(format, hasErrors, { VALUE: colValue, ...placeholders }, generationFormat),
+                indent: currIndent
             });
 
             lastSeenColValues[colIndex] = colValue;
@@ -38,15 +36,6 @@ export const getBuilderLines = (data, rowConfig, generationFormat) => {
     }
 
     return lines;
-};
-
-export const getRowPlaceholders = (row) => {
-    const placeholders = {};
-    row.forEach((i, index) => {
-        placeholders['COL' + (index+1)] = i;
-    });
-
-    return placeholders;
 };
 
 let documentRowPlaceholders = [];
@@ -101,11 +90,13 @@ export const convertKnownHtmlCharsToRtf = (content) => {
             }
 
 	        if (token.name === 'font') {
-	        	console.log(token);
 	        	if (token.attributes && token.attributes.size) {
 			        rtfStr += `{\\fs${parseInt(token.attributes.size.trim(), 10)*2}`;
 			        openFontTags++;
 		        }
+	        }
+	        if (token.name === 'noStyle') {
+				rtfStr += '{\\b0\\i0\\ul0 ';
 	        }
         }
 
@@ -117,6 +108,9 @@ export const convertKnownHtmlCharsToRtf = (content) => {
             	rtfStr += '}';
             	openFontTags--;
             }
+            if (token.name === 'noStyle') {
+            	rtfStr += '}';
+            }
         }
 
         if (token.type === 'text') {
@@ -125,6 +119,24 @@ export const convertKnownHtmlCharsToRtf = (content) => {
     }
 
     return rtfStr;
+};
+
+export const applyArbitraryRegex = (str, regex) => {
+	let newStr = str;
+
+	// regex.forEach((row) => {
+	// 	if (row.regex) {
+	// 		const regex = new RegExp(row.regex);
+	//
+	// 		if (regex.test(newStr)) {
+	// 			console.log("match ", newStr, row.replacement);
+	// 		}
+	//
+	// 		newStr = newStr.replace(regex, row.replacement);
+	// 	}
+	// });
+
+	return newStr;
 };
 
 export const getBuilderContent = (isPreview, data, rowData, format, textIndentNumSpaces, htmlIndentWidth, rowClassPrefix,
@@ -138,7 +150,7 @@ export const getBuilderContent = (isPreview, data, rowData, format, textIndentNu
     // a little inelegant, but for previewing we just generate HTML with the indentation hardcoded. For the actual
     // generation we generate the final markup with the appropriate CSS separately
     if (isPreview) {
-        lines.forEach(({ value, indent}) => {
+        lines.forEach(({ value, indent }) => {
             if (format === "html" || format === "rtf") {
                 const pxWidth = (indent-1) * htmlIndent;
                 content += `<div style="padding-left: ${pxWidth}px">${value}</div>`;
@@ -148,14 +160,18 @@ export const getBuilderContent = (isPreview, data, rowData, format, textIndentNu
         });
 
     } else {
-        lines.forEach(({ value, colIndex, indent, rtfLineHeight }) => {
+        lines.forEach(({ value, colIndex, uiRowIndex, indent }) => {
             if (format === "html") {
                 const cls = `${rowClassPrefix}${colIndex + 1} ${rowClassPrefix}indent-${indent}`;
                 content += `<div class="${cls}">${value}</div>\n`;
             } else if (format === "rtf") {
-                const lineHeight = rtfLineHeight ? rtfLineHeight : rtfDefaultLineHeight;
 
-                content += `{\\pard\\sa${lineHeight} ` + (' '.repeat((indent-1)*textSpaces) + convertKnownHtmlCharsToRtf(value)) + ' \\par}\n';
+	            const lineHeight = rowData[uiRowIndex].settings && rowData[uiRowIndex].settings.rtfLineHeight ?
+		            rowData[uiRowIndex].settings.rtfLineHeight : rtfDefaultLineHeight;
+
+                const updatedStr = applyArbitraryRegex(value, rowData[uiRowIndex].arbitraryRegex);
+
+                content += `{\\pard\\sa${lineHeight} ` + (' '.repeat((indent-1)*textSpaces) + convertKnownHtmlCharsToRtf(updatedStr)) + ' \\par}\n';
             } else {
                 content += ' '.repeat((indent-1)*textSpaces) + value + '\n';
             }
@@ -175,7 +191,7 @@ export const validateRtfRow = (rowString) => {
     const data = Parser.parse(rowString);
 
     const invalidTags = [];
-    const validTags = ['b', 'i', 'u', 'br', 'font'];
+    const validTags = ['b', 'i', 'u', 'br', 'font', 'noStyle'];
 
     for (const token of data) {
         if (token.type === 'open') {

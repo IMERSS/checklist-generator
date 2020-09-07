@@ -4,7 +4,8 @@ import * as selectors from '../store/settings/settings.selectors';
 import Page from './Page';
 
 const mapStateToProps = (state) => ({
-    pageIndex: selectors.getPageIndex(state)
+    pageIndex: selectors.getPageIndex(state),
+	data: selectors.getData(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

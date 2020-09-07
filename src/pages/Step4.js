@@ -65,6 +65,7 @@ ${generatedContent}
         }
 
         let rtfStr = null;
+        let button = <CopyToClipboardBtn content={generatedContent} />;
         if (format === 'rtf') {
             rtfStr = (
                 <>
@@ -73,6 +74,7 @@ ${generatedContent}
                     and re-open it to see the formatting styles applied.
                 </>
             );
+            button = <DownloadContentBtn content={generatedContent} />;
         }
 
         return (
@@ -83,8 +85,7 @@ ${generatedContent}
 
                 <div className="generatePanel">{generatedContent}</div>
                 <div style={{ float: 'right' }}>
-	                <DownloadContentBtn content={generatedContent} style={{ marginRight: 10 }}/>
-                    <CopyToClipboardBtn content={generatedContent} />
+	                {button}
                 </div>
             </>
         );

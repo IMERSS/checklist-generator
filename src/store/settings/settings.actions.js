@@ -57,7 +57,6 @@ export const updateRowFormatError = debounce(100, (dispatch, rowId, format, gene
             errors
         }
     });
-
 });
 
 export const UPDATE_ROW_FORMAT = 'UPDATE_ROW_FORMAT';
@@ -80,6 +79,9 @@ export const setBuilderTab = (tab) => ({ type: SET_BUILDER_TAB, payload: { tab }
 
 export const RESET = 'RESET';
 export const onReset = () => ({ type: 'RESET' });
+
+export const PURGE = 'PURGE';
+export const purge = () => ({ type: 'PURGE' });
 
 export const CLEAR_SETTINGS_ERROR = 'CLEAR_SETTINGS_ERROR';
 export const clearSettingsError = () => ({ type: CLEAR_SETTINGS_ERROR });
@@ -171,3 +173,6 @@ export const setAutoUpdate = (enabled) => ({ type: SET_AUTO_UPDATE, payload: { e
 
 export const MANUAL_UPDATE = 'MANUAL_UPDATE';
 export const manualUpdateDisplay = () => ({ type: MANUAL_UPDATE });
+
+export const UPDATE_ARBITRARY_REGEX = 'UPDATE_ARBITRARY_REGEX';
+export const updateArbitraryRegex = (regex) => ({ type: UPDATE_ARBITRARY_REGEX, payload: { regex } });

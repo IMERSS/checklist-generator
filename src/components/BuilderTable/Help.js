@@ -41,17 +41,18 @@ const Help = () => (
             so the auto-update feature is unavailable.
         </p>
 
-	    <h3>Styling - HTML & RTF</h3>
+	    <h2>Styling - HTML & RTF</h2>
 
 	    <p>
 		    If you're generating an HTML or RTF checklist you can style the content (plain text is just plain text!).
-		    For HTML, enter whatever HTML content you want around the placeholders. For RTF, you have the the following
+		    For HTML, enter whatever HTML content you want around the placeholders, or use the class names that
+		    are automatically added per row to style them afterwards. For RTF, you have the the following
 		    options available. If you enter these HTML tags they will be converted to their RTF equivalents:
 	    </p>
 
 	    <ul>
 		    <li>
-			    <b>bold</b> ({'<b>'}),
+			    <b>bold</b> ({'<b>'}) - regular bold HTML tags are converted to RTF bold tags.
 		    </li>
 		    <li>
 		        <b>italic</b> ({'<i>'})
@@ -60,10 +61,14 @@ const Help = () => (
 		        <b>underline</b> ({'<u>'})
 		    </li>
 		    <li>
-			    <b>line breaks</b> ({'<br>'}).
+			    <b>line breaks</b> ({'<br>'}) - this <i>works</i> but you might want to just consider adding a custom
+			    line height for the row (click on the settings icon on the row to override the default value)
 		    </li>
 		    <li>
-			    <b>font</b>
+			    <b>font</b> - even though the HTML font tag has been deprecated, this app brings it back <i>legacy style</i>!
+			    It's actually just an easy-to-understand way to control the font for a particular section of your row. It
+			    only currently accepts the "size" attribute (in pt), so can be used like this:
+			    <b>{`<font size="20">...</font>`}</b>
 		    </li>
 	    </ul>
     </>

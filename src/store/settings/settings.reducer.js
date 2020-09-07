@@ -1,8 +1,12 @@
 import { nanoid } from 'nanoid';
 import * as actions from './settings.actions';
 import { removeArrayItem } from '../../helpers/utils';
+import C from '../../constants';
 
 const initialState = {
+	// this option is used to empty redux-persist. Useful when there are breaking changes being rolled out so old
+	// configs don't crash the user's browser
+	appStateVersion: C.APP_STATE_VERSION,
     pageIndex: 0,
     uploadedFilename: '',
     data: null,
@@ -27,6 +31,10 @@ const initialState = {
 
 const settingsReducer = (state = initialState, action) => {
     switch (action.type) {
+
+	    case actions.PURGE:
+	    	return initialState;
+
         case actions.RESET: {
             return {
                 ...state,
@@ -74,6 +82,12 @@ const settingsReducer = (state = initialState, action) => {
                 errors: [],
                 format: '{{it.VALUE}}',
                 settings: {},
+	            arbitraryRegex: [
+		            { example: '', regex: '', replacement: '' },
+		            { example: '', regex: '', replacement: '' },
+		            { example: '', regex: '', replacement: '' },
+		            { example: '', regex: '', replacement: '' }
+	            ],
                 ...action.payload
             };
 
@@ -140,14 +154,9 @@ const settingsReducer = (state = initialState, action) => {
             };
         }
         case actions.UPDATE_SETTING: {
-            let autoUpdate = state.autoUpdate;
-            if (action.payload.setting === 'format' && action.payload.value === 'rtf') {
-                autoUpdate = false;
-            }
             return {
                 ...state,
-                [action.payload.setting]: action.payload.value,
-                autoUpdate
+                [action.payload.setting]: action.payload.value
             };
         }
         case actions.ERROR_PARSING_SETTINGS: {
@@ -223,9 +232,21 @@ const settingsReducer = (state = initialState, action) => {
                 regenerationCount: state.regenerationCount+1
             };
         }
+	    case actions.UPDATE_ARBITRARY_REGEX: {
+	    	return {
+	    		...state,
+			    rows: {
+				    ...state.rows,
+				    [state.editingRowId]: {
+					    ...state.rows[state.editingRowId],
+					    arbitraryRegex: action.payload.regex
+				    }
+			    }
+		    };
+	    }
         default:
             return state;
     }
-}
+};
 
 export default settingsReducer;

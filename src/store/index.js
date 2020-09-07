@@ -11,8 +11,9 @@ const rootReducer = combineReducers({
 const persistConfig = {
     key: 'root',
     storage,
-}
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 const store = createStore(

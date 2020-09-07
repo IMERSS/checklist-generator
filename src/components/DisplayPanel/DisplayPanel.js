@@ -1,5 +1,4 @@
 import React from 'react';
-import Tooltip from '@material-ui/core/Tooltip';
 import Button from "@material-ui/core/Button";
 import "./displayPanel.scss";
 
@@ -18,30 +17,19 @@ const DisplayPanel = ({ format, autoUpdate, setAutoUpdate, manualUpdateDisplay, 
     }
 
     let autoUpdatePanelClasses = 'autoUpdatePanel';
-    if (isRtf) {
-        autoUpdatePanelClasses += ' disabled';
-    }
 
     return (
         <>
             <div className={autoUpdatePanelClasses}>
-                <Tooltip
-                    title="This option isn't available for RTF format, sorry!"
-                    disableFocusListener={!isRtf}
-                    disableHoverListener={!isRtf}
-                    disableTouchListener={!isRtf}
-                >
-                    <span>
-                        <input
-                            type="checkbox"
-                            checked={autoUpdate}
-                            id="toggleAutoUpdate"
-                            onChange={() => setAutoUpdate(!autoUpdate)}
-                            disabled={format === 'rtf'}
-                        />
-                        <label htmlFor="toggleAutoUpdate">Auto-update display panel</label>
-                    </span>
-                </Tooltip>
+                <span>
+                    <input
+                        type="checkbox"
+                        checked={autoUpdate}
+                        id="toggleAutoUpdate"
+                        onChange={() => setAutoUpdate(!autoUpdate)}
+                    />
+                    <label htmlFor="toggleAutoUpdate">Auto-update display panel</label>
+                </span>
                 <Button
                     variant="contained"
                     disableElevation

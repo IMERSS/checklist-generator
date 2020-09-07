@@ -1,3 +1,4 @@
 export default {
-    GITHUB_URL: 'https://github.com/benkeen/checklist-generator'
+    GITHUB_URL: 'https://github.com/imerss/checklist-generator',
+	APP_STATE_VERSION: 2
 };

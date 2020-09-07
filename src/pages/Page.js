@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,6 +14,7 @@ import Step2 from './Step2.container';
 import Step3 from './Step3.container';
 import Step4 from './Step4.container';
 import C from '../constants';
+import { computeDocumentRowPlaceholders } from "../helpers/builder";
 
 const theme = createMuiTheme({
     typography: {
@@ -45,8 +46,14 @@ const steps = [
 ];
 
 
-const Page = ({ pageIndex, setPageIndex }) => {
+const Page = ({ data, pageIndex, setPageIndex }) => {
     const classes = useStyles();
+
+    useEffect(() => {
+	    if (data) {
+		    computeDocumentRowPlaceholders(data);
+        }
+    }, [data]);
 
     const getContent = () => {
         if (pageIndex === 0) {

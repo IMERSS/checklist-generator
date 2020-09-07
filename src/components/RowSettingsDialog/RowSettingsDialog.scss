@@ -1,0 +1,32 @@
+.arbitraryRegexTable {
+	.heading div {
+		font-weight: bold;
+	}
+
+	& > div {
+		display: flex;
+		line-height: 30px;
+
+		.col1 {
+			flex: 0 1 300px;
+			margin-right: 10px;
+		}
+
+		.col2 {
+			flex: 1;
+			margin-right: 15px;
+		}
+
+		.col3 {
+			flex: 1;
+		}
+
+		label {
+			margin-right: 10px;
+		}
+
+		input {
+			width: 100%;
+		}
+	}
+}

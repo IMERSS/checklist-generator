@@ -39,7 +39,10 @@ export const BuilderTable = ({ format, rows, onAddRow, onDeleteRow, onSelectColu
                         <label htmlFor={`${rowId}-indent`}>Indent</label>
                     </div>
                     <div className="formatCol">
-                        <input type="text" value={format} className={rowFieldClass} onChange={(e) => onUpdateRowFormat(rowId, e.target.value)}/>
+                        <input type="text" value={format} className={rowFieldClass} onChange={(e) => {
+                        	console.log(e.target.value);
+                        	onUpdateRowFormat(rowId, e.target.value);
+                        }}/>
                     </div>
                     {getSettingsCol(rowId)}
                     <div className="deleteRow" onClick={() => onDeleteRow(rowId)}>
