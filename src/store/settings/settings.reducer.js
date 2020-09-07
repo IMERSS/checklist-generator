@@ -14,10 +14,10 @@ const initialState = {
     sortedRows: [],
     builderTab: 0,
     autoUpdate: true,
-    format: "html", // "html", "text", "rtf"
+    format: 'html', // "html", "text", "rtf"
     textIndentNumSpaces: 4,
     htmlIndentWidth: 50,
-    rowClassPrefix: "cg-col-",
+    rowClassPrefix: 'cg-col-',
     rtfDefaultFontSize: 13,
     rtfDefaultLineHeight: 80,
     loadSettingsError: null,
@@ -35,10 +35,12 @@ const settingsReducer = (state = initialState, action) => {
 	    case actions.PURGE:
 	    	return initialState;
 
+        // used when a user uploads a new file. Resets some of the settings, but not all
         case actions.RESET: {
             return {
                 ...state,
                 data: null,
+	            autoUpdate: true,
                 uploadedFilename: '',
                 rows: {},
                 sortedRows: [],
@@ -46,7 +48,8 @@ const settingsReducer = (state = initialState, action) => {
                 loadSettingsError: null,
                 applySettingsDialogOpen: false,
                 rowSettingsDialogOpen: false,
-                editingRowId: null
+                editingRowId: null,
+	            regenerationCount: state.regenerationCount + 1
             };
         }
         case actions.SET_PAGE_INDEX:

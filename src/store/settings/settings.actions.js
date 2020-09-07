@@ -117,7 +117,9 @@ export const processSettings = (settingsStr) => (dispatch) => {
                 dispatch(addRow({
                     colIndex: row.colIndex,
                     indent: row.indent,
-                    format: row.format
+                    format: row.format,
+	                settings: row.settings,
+	                arbitraryRegex: row.arbitraryRegex
                 }));
             });
         }

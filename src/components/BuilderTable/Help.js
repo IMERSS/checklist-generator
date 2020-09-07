@@ -65,10 +65,14 @@ const Help = () => (
 			    line height for the row (click on the settings icon on the row to override the default value)
 		    </li>
 		    <li>
-			    <b>font</b> - even though the HTML font tag has been deprecated, this app brings it back <i>legacy style</i>!
+			    <b>font</b> ({'<font>'}) - even though the HTML font tag has been deprecated, this app brings it back <i>legacy style</i>!
 			    It's actually just an easy-to-understand way to control the font for a particular section of your row. It
 			    only currently accepts the "size" attribute (in pt), so can be used like this:
 			    <b>{`<font size="20">...</font>`}</b>
+		    </li>
+		    <li>
+			    <b>noStyle</b> ({'<noStyle>'}) - this tag removes italic, bold and underline for a section of content.
+			    Usage: <b>{`<noStyle>...</noStyle>`}</b>
 		    </li>
 	    </ul>
     </>
