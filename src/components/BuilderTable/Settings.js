@@ -108,9 +108,8 @@ const Settings = ({ format, onChangeSetting, htmlIndentWidth, rowClassPrefix, te
                 <div className="tip">
                     RTF stands for <i>Rich Text Format</i>. This is a format understood by any rich-text editor like
                     Word, Wordperfect, TextEdit and Open Office. To keep formatting the content as simple as possible,
-                    you can still enter HTML in the builder rows, but it will only convert the following tags
-                    to their RTF equivalents: <b>bold</b> ({'<b>'}), <b>italic</b> ({'<i>'}), <b>underline</b> ({'<u>'}) and <b>line
-                    breaks</b> ({'<br>'}). All other tags will show an error.
+                    you can still enter HTML in the builder rows, but it will only convert a few tags. See the help tag
+	                for more information.
                 </div>
             )
         }

@@ -40,6 +40,32 @@ const Help = () => (
             disabling it and just manually updating it. Note: the <b>RTF</b> format is very time consuming to regenerate,
             so the auto-update feature is unavailable.
         </p>
+
+	    <h3>Styling - HTML & RTF</h3>
+
+	    <p>
+		    If you're generating an HTML or RTF checklist you can style the content (plain text is just plain text!).
+		    For HTML, enter whatever HTML content you want around the placeholders. For RTF, you have the the following
+		    options available. If you enter these HTML tags they will be converted to their RTF equivalents:
+	    </p>
+
+	    <ul>
+		    <li>
+			    <b>bold</b> ({'<b>'}),
+		    </li>
+		    <li>
+		        <b>italic</b> ({'<i>'})
+		    </li>
+		    <li>
+		        <b>underline</b> ({'<u>'})
+		    </li>
+		    <li>
+			    <b>line breaks</b> ({'<br>'}).
+		    </li>
+		    <li>
+			    <b>font</b>
+		    </li>
+	    </ul>
     </>
 );
 

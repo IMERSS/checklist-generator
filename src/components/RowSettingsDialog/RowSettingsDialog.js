@@ -32,11 +32,6 @@ const RowSettingsDialog = ({ selectedColumn, onClose, open, rowSettings, updateR
         >
             <DialogTitle id="confirmation-dialog-title">RTF Row Settings: <i>{selectedColumn}</i></DialogTitle>
             <DialogContent dividers>
-                <div style={{ marginBottom: 10 }}>
-                    To reduce the amount of manual customization of the generated RTF content, you have the option to
-                    define a few styles here for this particular row.
-                </div>
-
                 <div className="builderSettings">
                     <div>
                         <div className="settingsCol1">
@@ -60,7 +55,8 @@ const RowSettingsDialog = ({ selectedColumn, onClose, open, rowSettings, updateR
                                 value={settings.rtfLineHeight}
                                 checked={!settings.rtfLineHeightUseDefault}
                                 style={{ width: 40 }}
-                                onChange={(e) => updateSettings('rtfLineHeight', e.target.value)} />                        </div>
+                                onChange={(e) => updateSettings('rtfLineHeight', e.target.value)} />
+                        </div>
                     </div>
                 </div>
 
