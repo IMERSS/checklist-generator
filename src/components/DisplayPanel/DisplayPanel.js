@@ -30,7 +30,7 @@ const DisplayPanel = ({
       <div className='rtfNote'>
         Note: the display panel below is very limited for RTF since it's a very
         different medium than HTML. It'll only show bold, italic, underline and
-        whatever info your add for each row. You'll need to actually check the
+        whatever info you add for each row. You'll need to actually check the
         generated content to see how your checklist looks.
       </div>
     );
