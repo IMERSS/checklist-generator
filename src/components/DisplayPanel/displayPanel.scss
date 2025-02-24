@@ -1,43 +1,44 @@
 .displayPanel {
-	clear: both;
+  clear: both;
 
-	margin-top: 10px;
-    border: 2px dotted #cccccc;
-    background-color: #fcfcff;
-    padding: 20px;
-    height: 400px;
-    overflow-y: scroll;
-    overflow-x: auto;
-    line-height: 26px;
-    font-size: 14px;
-    &>* {
-        font-size: inherit;
-    }
+  margin-top: 10px;
+  border: 2px dotted #cccccc;
+  background-color: #fcfcff;
+  padding: 20px;
+  height: 400px;
+  overflow-y: scroll;
+  overflow-x: auto;
+  line-height: 26px;
+  font-size: 14px;
+  & > * {
+    font-size: inherit;
+  }
 
-    &.textFormat, &.rtfFormat {
-        white-space: pre-wrap;
-    }
+  &.textFormat,
+  &.rtfFormat {
+    white-space: pre-wrap;
+  }
 }
 
 .autoUpdatePanel {
-    float: right;
-	margin: 5px 0;
+  float: right;
+  margin: 5px 0;
 
+  label {
+    margin-right: 8px;
+  }
+
+  &.disabled {
     label {
-        margin-right: 8px;
+      color: #999999;
     }
-
-    &.disabled {
-        label {
-            color: #999999;
-        }
-    }
+  }
 }
 
 .rtfNote {
-	margin-top: 5px;
-	color: #3b8045;
-	background-color: #e7f7e9;
-	padding: 15px;
-	clear: both;
+  margin-top: 5px;
+  color: #3b8045;
+  background-color: #e7f7e9;
+  padding: 15px;
+  clear: both;
 }

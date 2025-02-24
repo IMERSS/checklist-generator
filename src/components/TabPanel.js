@@ -1,15 +1,11 @@
-import React from "react";
+import React from 'react';
 
 const TabPanel = ({ children, value, index }) => {
-    if (value !== index) {
-        return null;
-    }
+  if (value !== index) {
+    return null;
+  }
 
-    return (
-        <div style={{ padding: "20px 0 0" }}>
-            {children}
-        </div>
-    );
-}
+  return <div style={{ padding: '20px 0 0' }}>{children}</div>;
+};
 
 export default TabPanel;

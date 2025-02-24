@@ -3,10 +3,8 @@ import { ColumnDropdown } from './ColumnDropdown';
 import * as selectors from '../../store/settings/settings.selectors';
 
 const mapStateToProps = (state) => ({
-    columns: selectors.getColumns(state)
+  columns: selectors.getColumns(state),
 });
-const container = connect(
-    mapStateToProps
-)(ColumnDropdown);
+const container = connect(mapStateToProps)(ColumnDropdown);
 
 export default container;

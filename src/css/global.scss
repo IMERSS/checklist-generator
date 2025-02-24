@@ -1,68 +1,78 @@
 body {
-	line-height: 22px;
-	padding: 0 0 30px 0;
-	margin: 0;
-	font-family: "Lato", sans-serif;
+  line-height: 22px;
+  padding: 0 0 30px 0;
+  margin: 0;
+  font-family: 'Lato', sans-serif;
 }
 
 .appBar {
-	div, .MuiIconButton-label {
-		color: white;
-	}
+  div,
+  .MuiIconButton-label {
+    color: white;
+  }
 }
 b {
-	font-weight: 800;
+  font-weight: 800;
 }
 
 .app {
-	width: 1000px;
-	margin: 80px auto 0;
+  width: 1000px;
+  margin: 80px auto 0;
 }
 
 footer {
-	margin-top: 20px;
+  margin-top: 20px;
 }
 
-div, span, select, option, p, body, label, input {
-	font-size: 13px;
+div,
+span,
+select,
+option,
+p,
+body,
+label,
+input {
+  font-size: 13px;
 }
 
-select, option, input {
-	font-size: 12px;
-	font-family: "Lato", sans-serif;
+select,
+option,
+input {
+  font-size: 12px;
+  font-family: 'Lato', sans-serif;
 }
 
-a, .link {
-	text-decoration: none;
-	color: #0066cc;
-	cursor: pointer;
+a,
+.link {
+  text-decoration: none;
+  color: #0066cc;
+  cursor: pointer;
 
-	&:hover {
-		border-bottom
-		: 1px solid #000000;
-	}
+  &:hover {
+    border-bottom: 1px solid #000000;
+  }
 }
 
 .buttonDivider {
-	margin: 0 20px;
-	color: #dddddd;
+  margin: 0 20px;
+  color: #dddddd;
 }
 
 input {
-	outline:none;
-	border: 1px solid #cccccc;
-	padding: 2px;
-	&:focus {
-		border: 1px solid #3399cc;
-	}
+  outline: none;
+  border: 1px solid #cccccc;
+  padding: 2px;
+  &:focus {
+    border: 1px solid #3399cc;
+  }
 }
 
 .headingIcon {
-	color: #a8b1e0;
-	margin: 4px 6px 4px 0;
+  color: #a8b1e0;
+  margin: 4px 6px 4px 0;
 }
 
 // override any font-sizes in the UI
 font {
-	font-size: 14px;
+  font-size: 14px;
 }
