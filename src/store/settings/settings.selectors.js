@@ -80,7 +80,6 @@ export const getPreviewContent = createSelector(
     htmlIndentWidth
   ) => {
     if (!documentRowPlaceholdersGenerated) {
-      console.log('Not generated yet!');
       return '';
     }
 

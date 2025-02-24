@@ -247,7 +247,7 @@ const settingsReducer = (state = initialState, action) => {
         },
       };
     }
-    case actions.SET_DOCUMENT_ROW_PLACEHOLDERS_LOADED: {
+    case actions.SET_DOCUMENT_ROW_PLACEHOLDERS_GENERATED: {
       return {
         ...state,
         documentRowPlaceholdersGenerated: action.payload.value,

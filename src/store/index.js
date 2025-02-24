@@ -4,14 +4,21 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import settingsReducer from './settings/settings.reducer';
 
-const rootReducer = combineReducers({
-  settings: settingsReducer,
-});
-
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['settings'],
 };
+
+const settingsPersistConfig = {
+  key: 'settings',
+  storage,
+  blacklist: ['documentRowPlaceholdersGenerated'],
+};
+
+const rootReducer = combineReducers({
+  settings: persistReducer(settingsPersistConfig, settingsReducer),
+});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
