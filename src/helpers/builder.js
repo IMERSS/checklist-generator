@@ -5,13 +5,13 @@ import Parser from 'html-tokenizer/parser';
 export const getBuilderLines = (data, rowConfig, generationFormat) => {
   const lastSeenColValues = [];
   const lines = [];
-
+  const numConfigRows = rowConfig.length;
   const rowPlaceholders = getDocumentRowPlaceholders();
-
-  console.log({ rowPlaceholders });
 
   for (let row = 1; row < data.length; row++) {
     let currIndent = 0;
+    let lastValueWasAlreadySeen = false;
+
     rowConfig.forEach((config, uiRowIndex) => {
       const { colIndex, format, errors, indent } = config;
       const colValue = data[row][colIndex];
@@ -20,8 +20,19 @@ export const getBuilderLines = (data, rowConfig, generationFormat) => {
 
       // if we've already output this item, don't add it again
       if (lastSeenColValues[colIndex] === colValue) {
+        lastValueWasAlreadySeen = true;
         return;
       }
+
+      // see bug: https://github.com/IMERSS/checklist-generator/issues/2
+      if (lastValueWasAlreadySeen && uiRowIndex !== 0) {
+        for (let k = uiRowIndex + 1; k < numConfigRows; k++) {
+          const obsoleteCacheRow = rowConfig[k].colIndex;
+          lastSeenColValues[obsoleteCacheRow] = null;
+        }
+      }
+
+      lastValueWasAlreadySeen = false;
 
       const placeholders = rowPlaceholders[row];
       const hasErrors = errors && errors.length > 0;
@@ -41,8 +52,6 @@ export const getBuilderLines = (data, rowConfig, generationFormat) => {
       lastSeenColValues[colIndex] = colValue;
     });
   }
-
-  console.log({ data, lines });
 
   return lines;
 };
@@ -164,8 +173,6 @@ export const getBuilderContent = (
 ) => {
   const lines = getBuilderLines(data, rowData, format);
   let content = '';
-
-  console.log('lines: ', lines);
 
   const textSpaces = parseInt(textIndentNumSpaces || 0, 10);
   const htmlIndent = parseInt(htmlIndentWidth || 0, 10);
