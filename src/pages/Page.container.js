@@ -10,6 +10,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setPageIndex: (pageIndex) => dispatch(actions.setPageIndex(pageIndex)),
+  setDocumentRowPlaceholdersGenerated: () =>
+    dispatch(actions.setDocumentRowPlaceholdersGenerated()),
 });
 
 const container = connect(mapStateToProps, mapDispatchToProps)(Page);

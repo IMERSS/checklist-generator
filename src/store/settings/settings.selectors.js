@@ -25,6 +25,8 @@ export const isRowSettingsDialogOpen = (state) =>
   state.settings.rowSettingsDialogOpen;
 export const shouldAutoUpdate = (state) => state.settings.autoUpdate;
 export const getRegenerationCount = (state) => state.settings.regenerationCount;
+export const isDocumentRowPlaceholdersGenerated = (state) =>
+  state.settings.documentRowPlaceholdersGenerated;
 
 export const getFormatLabel = createSelector(getFormat, (format) => {
   const map = {
@@ -60,6 +62,7 @@ let lastRegenerationCount;
 let lastBuilderContent;
 export const getPreviewContent = createSelector(
   shouldAutoUpdate,
+  isDocumentRowPlaceholdersGenerated,
   getRegenerationCount,
   getData,
   getRowData,
@@ -68,6 +71,7 @@ export const getPreviewContent = createSelector(
   getHtmlIndentWidth,
   (
     autoUpdate,
+    documentRowPlaceholdersGenerated,
     regenerationCount,
     data,
     rowData,
@@ -75,6 +79,11 @@ export const getPreviewContent = createSelector(
     textIndentNumSpaces,
     htmlIndentWidth
   ) => {
+    if (!documentRowPlaceholdersGenerated) {
+      console.log('Not generated yet!');
+      return '';
+    }
+
     if (
       !autoUpdate &&
       regenerationCount === lastRegenerationCount &&

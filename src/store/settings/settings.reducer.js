@@ -24,6 +24,7 @@ const initialState = {
   applySettingsDialogOpen: false,
   rowSettingsDialogOpen: false,
   editingRowId: null, // for the row settings dialog
+  documentRowPlaceholdersGenerated: false,
 
   // there's a better way to do this that I keep forgetting... need to imperatively update display panel when auto-update is disabled
   regenerationCount: 0,
@@ -244,6 +245,12 @@ const settingsReducer = (state = initialState, action) => {
             arbitraryRegex: action.payload.regex,
           },
         },
+      };
+    }
+    case actions.SET_DOCUMENT_ROW_PLACEHOLDERS_LOADED: {
+      return {
+        ...state,
+        documentRowPlaceholdersGenerated: action.payload.value,
       };
     }
     default:

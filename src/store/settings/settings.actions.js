@@ -54,6 +54,13 @@ export const toggleRowIndentation = (rowId) => ({
   payload: { rowId },
 });
 
+export const SET_DOCUMENT_ROW_PLACEHOLDERS_LOADED =
+  'SET_DOCUMENT_ROW_PLACEHOLDERS_LOADED';
+export const setDocumentRowPlaceholdersGenerated = () => ({
+  type: SET_DOCUMENT_ROW_PLACEHOLDERS_LOADED,
+  payload: { value: true },
+});
+
 export const UPDATE_ROW_FORMAT_ERROR = 'UPDATE_ROW_FORMAT_ERROR';
 export const updateRowFormatError = debounce(
   100,

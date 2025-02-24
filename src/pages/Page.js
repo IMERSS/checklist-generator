@@ -37,13 +37,20 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['Start', 'Upload file', 'Build checklist', 'Generate'];
 
-const Page = ({ data, pageIndex, setPageIndex }) => {
+const Page = ({
+  data,
+  pageIndex,
+  setPageIndex,
+  setDocumentRowPlaceholdersGenerated,
+}) => {
   const classes = useStyles();
 
   useEffect(() => {
     if (data) {
       computeDocumentRowPlaceholders(data);
+      setDocumentRowPlaceholdersGenerated();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const getContent = () => {
