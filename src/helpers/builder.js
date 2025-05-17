@@ -9,6 +9,11 @@ export const getBuilderLines = (data, rowConfig, generationFormat) => {
   const rowPlaceholders = getDocumentRowPlaceholders();
 
   for (let row = 1; row < data.length; row++) {
+    // see bug: https://github.com/IMERSS/checklist-generator/issues/5
+    if (data[row].length === 1 && data[row][0] === '') {
+      continue;
+    }
+
     let currIndent = 0;
     let lastValueWasAlreadySeen = false;
 
@@ -160,6 +165,10 @@ export const applyArbitraryRegex = (str, regex) => {
   return newStr;
 };
 
+/**
+ * colIndex: the index of the column in the original data set
+ * uiRowIndex: how indented the particular entry should be.
+ */
 export const getBuilderContent = (
   isPreview,
   data,
