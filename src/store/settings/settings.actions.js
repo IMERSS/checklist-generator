@@ -165,10 +165,8 @@ export const processSettings = (settingsStr) => (dispatch) => {
     ) {
       dispatch(updateSetting('format', settings.format));
     }
-    if (settings.textIndentNumSpaces) {
-      dispatch(
-        updateSetting('textIndentNumSpaces', settings.textIndentNumSpaces)
-      );
+    if (settings.rtfIndent) {
+      dispatch(updateSetting('rtfIndent', settings.rtfIndent));
     }
     if (settings.htmlIndentWidth) {
       dispatch(updateSetting('htmlIndentWidth', settings.htmlIndentWidth));

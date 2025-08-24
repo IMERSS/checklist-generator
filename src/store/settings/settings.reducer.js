@@ -15,7 +15,7 @@ const initialState = {
   builderTab: 0,
   autoUpdate: true,
   format: 'html', // "html", "text", "rtf"
-  textIndentNumSpaces: 4,
+  rtfIndent: 500,
   htmlIndentWidth: 50,
   rowClassPrefix: 'cg-col-',
   rtfDefaultFontSize: 13,

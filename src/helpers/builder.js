@@ -1,6 +1,8 @@
 import * as squirrelly from 'squirrelly';
 import Parser from 'html-tokenizer/parser';
 
+const convertRtfUnitsToPixels = (rtfIndent) => Math.floor(rtfIndent / 30);
+
 // helper method to parse the CSV data (in JSON format) and return an array of rows to be output
 export const getBuilderLines = (data, rowConfig, generationFormat) => {
   const lastSeenColValues = [];
@@ -174,7 +176,7 @@ export const getBuilderContent = (
   data,
   rowData,
   format,
-  textIndentNumSpaces,
+  rtfIndent,
   htmlIndentWidth,
   rowClassPrefix,
   rtfDefaultFontSize,
@@ -183,7 +185,7 @@ export const getBuilderContent = (
   const lines = getBuilderLines(data, rowData, format);
   let content = '';
 
-  const textSpaces = parseInt(textIndentNumSpaces || 0, 10);
+  const rtfIndentSize = parseInt(rtfIndent || 0, 10);
   const htmlIndent = parseInt(htmlIndentWidth || 0, 10);
 
   // a little inelegant, but for previewing we just generate HTML with the indentation hardcoded. For the actual
@@ -194,7 +196,9 @@ export const getBuilderContent = (
         const pxWidth = (indent - 1) * htmlIndent;
         content += `<div style="padding-left: ${pxWidth}px">${value}</div>`;
       } else {
-        content += ' '.repeat((indent - 1) * textSpaces) + value + '\n';
+        const rtfIndentToApproxSpaces = convertRtfUnitsToPixels(rtfIndent);
+        content +=
+          ' '.repeat((indent - 1) * rtfIndentToApproxSpaces) + value + '\n';
       }
     });
   } else {
@@ -215,12 +219,14 @@ export const getBuilderContent = (
         );
 
         content +=
-          `{\\pard\\sa${lineHeight} ` +
-          (' '.repeat((indent - 1) * textSpaces) +
-            convertKnownHtmlCharsToRtf(updatedStr)) +
+          `{\\pard\\sa${lineHeight}\\li${rtfIndentSize * (indent - 1)} ` +
+          convertKnownHtmlCharsToRtf(updatedStr) +
           ' \\par}\n';
       } else {
-        content += ' '.repeat((indent - 1) * textSpaces) + value + '\n';
+        const rtfIndentToApproxSpaces = convertRtfUnitsToPixels(rtfIndent);
+
+        content +=
+          ' '.repeat((indent - 1) * rtfIndentToApproxSpaces) + value + '\n';
       }
     });
 

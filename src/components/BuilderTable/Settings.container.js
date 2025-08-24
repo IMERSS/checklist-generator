@@ -5,7 +5,7 @@ import Settings from './Settings';
 
 const mapStateToProps = (state) => ({
   format: selectors.getFormat(state),
-  textIndentNumSpaces: selectors.getTextIndentNumSpaces(state),
+  rtfIndent: selectors.getRtfIndent(state),
   htmlIndentWidth: selectors.getHtmlIndentWidth(state),
   rowClassPrefix: selectors.getRowClassPrefix(state),
   rtfDefaultFontSize: selectors.getRtfDefaultFontSize(state),

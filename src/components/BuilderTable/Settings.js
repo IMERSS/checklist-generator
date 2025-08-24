@@ -5,7 +5,7 @@ const Settings = ({
   onChangeSetting,
   htmlIndentWidth,
   rowClassPrefix,
-  textIndentNumSpaces,
+  rtfIndent,
   rtfDefaultFontSize,
   rtfDefaultLineHeight,
 }) => {
@@ -66,24 +66,25 @@ const Settings = ({
     if (format === 'text' || format === 'rtf') {
       rows.push(
         <div key='numCharIndent'>
-          <div className='settingsCol1'>Num character indent</div>
+          <div className='settingsCol1'>Indentation</div>
           <div>
             <input
               type='number'
-              value={textIndentNumSpaces}
-              style={{ width: 40 }}
-              onChange={(e) =>
-                onChangeSetting('textIndentNumSpaces', e.target.value, 10)
-              }
+              value={rtfIndent}
+              style={{ width: 60 }}
+              onChange={(e) => onChangeSetting('rtfIndent', e.target.value, 10)}
             />
 
             <div className='tip'>
-              This is a convenience setting. Any builder rows where you check
-              the "Indent" checkbox will automatically get indented by this
-              number of characters, relative to the previous indented row. If
+              Any builder rows where you check the "Indent" checkbox will
+              automatically get indented by this value, relative to the previous
+              indented row. The value of 500 roughly equates to around 50px. If
               you want <i>different</i> levels of indentation for each row,
               don't check those checkboxes. Instead, manually indent the rows
-              with however many number of spaces you want.
+              with however many number of spaces you want. This means you'll
+              lose "smart" wrapping, however. If the text for a cell is very
+              long, it would wrap to be flush with the left side of the
+              document, not the current indentation.
             </div>
           </div>
         </div>

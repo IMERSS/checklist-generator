@@ -9,8 +9,7 @@ export const getRows = (state) => state.settings.rows;
 export const getSortedRows = (state) => state.settings.sortedRows;
 export const getBuilderTab = (state) => state.settings.builderTab;
 export const getFormat = (state) => state.settings.format;
-export const getTextIndentNumSpaces = (state) =>
-  state.settings.textIndentNumSpaces;
+export const getRtfIndent = (state) => state.settings.rtfIndent;
 export const getHtmlIndentWidth = (state) => state.settings.htmlIndentWidth;
 export const getRowClassPrefix = (state) => state.settings.rowClassPrefix;
 export const getRtfDefaultFontSize = (state) =>
@@ -67,7 +66,7 @@ export const getPreviewContent = createSelector(
   getData,
   getRowData,
   getFormat,
-  getTextIndentNumSpaces,
+  getRtfIndent,
   getHtmlIndentWidth,
   (
     autoUpdate,
@@ -76,7 +75,7 @@ export const getPreviewContent = createSelector(
     data,
     rowData,
     format,
-    textIndentNumSpaces,
+    rtfIndent,
     htmlIndentWidth
   ) => {
     if (!documentRowPlaceholdersGenerated) {
@@ -96,7 +95,7 @@ export const getPreviewContent = createSelector(
       data,
       rowData,
       format,
-      textIndentNumSpaces,
+      rtfIndent,
       htmlIndentWidth
     );
 
@@ -108,7 +107,7 @@ export const getGeneratedContent = createSelector(
   getData,
   getRowData,
   getFormat,
-  getTextIndentNumSpaces,
+  getRtfIndent,
   getHtmlIndentWidth,
   getRowClassPrefix,
   getRtfDefaultFontSize,
@@ -117,7 +116,7 @@ export const getGeneratedContent = createSelector(
     data,
     rowData,
     format,
-    textIndentNumSpaces,
+    rtfIndent,
     htmlIndentWidth,
     rowClassPrefix,
     rtfDefaultFontSize,
@@ -128,7 +127,7 @@ export const getGeneratedContent = createSelector(
       data,
       rowData,
       format,
-      textIndentNumSpaces,
+      rtfIndent,
       htmlIndentWidth,
       rowClassPrefix,
       rtfDefaultFontSize,
@@ -161,21 +160,14 @@ export const getSettingsStr = createSelector(
   getSortedRows,
   getRows,
   getFormat,
-  getTextIndentNumSpaces,
+  getRtfIndent,
   getHtmlIndentWidth,
   getRowClassPrefix,
-  (
-    sortedRows,
-    rows,
-    format,
-    textIndentNumSpaces,
-    htmlIndentWidth,
-    rowClassPrefix
-  ) => {
+  (sortedRows, rows, format, rtfIndent, htmlIndentWidth, rowClassPrefix) => {
     const settings = {
       rows: [],
       format,
-      textIndentNumSpaces,
+      rtfIndent,
       htmlIndentWidth,
       rowClassPrefix,
     };
