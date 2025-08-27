@@ -44,6 +44,15 @@ const Help = () => (
       </li>
     </ul>
 
+    <p>
+      In case you want to join multiple items, you can use the <b>join</b>{' '}
+      filter. Here's an example:{' '}
+      <b>{"{{it | join('; ', ['COL9','COL10','COL11'])}}"}</b>
+      That will combine the values in the COL9, COL10 and COL11 placeholders and
+      separate them with a semicolon and space. If any of the placeholders are
+      empty, it will ignore them.
+    </p>
+
     <h2>Display Panel</h2>
 
     <p>

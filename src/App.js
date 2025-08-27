@@ -10,6 +10,7 @@ import Page from './pages/Page.container';
 import './css/global.scss';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css/animate.compat.css';
+import './helpers/template';
 
 const checkState = async (state) => {
   const lastAppStateVersion = selectors.getAppStateVersion(state.getState());
