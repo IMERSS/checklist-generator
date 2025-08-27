@@ -147,11 +147,28 @@ export const convertKnownHtmlCharsToRtf = (content) => {
     }
 
     if (token.type === 'text') {
-      rtfStr += token.text;
+      rtfStr += encodeUtf8Chars(token.text);
     }
   }
 
   return rtfStr;
+};
+
+const encodeUtf8Chars = (str) => {
+  let newStr = '';
+  for (let i = 0; i < str.length; i++) {
+    if (isAscii(str[i])) {
+      newStr += str[i];
+    } else {
+      newStr += `\\u${str.charCodeAt(i)};`;
+    }
+  }
+  return newStr;
+};
+
+const isAscii = (str) => {
+  // eslint-disable-next-line
+  return /^[\x00-\x7F]*$/.test(str);
 };
 
 export const applyArbitraryRegex = (str, regex) => {

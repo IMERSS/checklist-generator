@@ -62,7 +62,6 @@ export const BuilderTable = ({
                 value={format}
                 className={rowFieldClass}
                 onChange={(e) => {
-                  console.log(e.target.value);
                   onUpdateRowFormat(rowId, e.target.value);
                 }}
               />
