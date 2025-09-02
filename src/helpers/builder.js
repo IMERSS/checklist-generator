@@ -176,12 +176,14 @@ const isAscii = (str) => {
 export const applyArbitraryRegex = (str, regex) => {
   let newStr = str;
 
-  regex.forEach((row) => {
-    if (row.regex) {
-      const regex = new RegExp(row.regex);
-      newStr = newStr.replace(regex, row.replacement);
-    }
-  });
+  if (regex) {
+    regex.forEach((row) => {
+      if (row.regex) {
+        const regex = new RegExp(row.regex);
+        newStr = newStr.replace(regex, row.replacement);
+      }
+    });
+  }
 
   return newStr;
 };
