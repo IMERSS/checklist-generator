@@ -10,6 +10,8 @@ export const getBuilderLines = (data, rowConfig, generationFormat) => {
   const numConfigRows = rowConfig.length;
   const rowPlaceholders = getDocumentRowPlaceholders();
 
+  console.log({ data, rowConfig });
+
   for (let row = 1; row < data.length; row++) {
     // see bug: https://github.com/IMERSS/checklist-generator/issues/5
     if (data[row].length === 1 && data[row][0] === '') {
@@ -21,12 +23,12 @@ export const getBuilderLines = (data, rowConfig, generationFormat) => {
 
     rowConfig.forEach((config, uiRowIndex) => {
       const { colIndex, format, errors, indent } = config;
-      const colValue = data[row][colIndex];
+      const colValue = colIndex !== null ? data[row][colIndex] : null;
 
       currIndent = indent ? currIndent + 1 : currIndent;
 
       // if we've already output this item, don't add it again
-      if (lastSeenColValues[colIndex] === colValue) {
+      if (lastSeenColValues[colIndex] === colValue && colValue !== null) {
         lastValueWasAlreadySeen = true;
         return;
       }
